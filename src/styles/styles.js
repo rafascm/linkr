@@ -22,6 +22,14 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${colors.bgMain}
     }
 
+    h1 {
+        font-family: 'Passion One', sans-serif;
+        font-size: 3rem;
+    }
+    h2 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 2rem;
+    }
 `;
 
 export default GlobalStyle;
