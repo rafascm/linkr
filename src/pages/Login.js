@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
-import SignIn from '../components/SingIn';
+import SignIn from '../components/SignIn';
 
 const LoginPage = () => {
     return (
