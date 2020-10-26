@@ -8,6 +8,7 @@ export const colors = {
     button: '#1877F2',
     mainText: '#707070',
     secondaryText: '#fff',
+    placeholderText: '#9F9F9F'
 
 }
 
@@ -33,3 +34,41 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default GlobalStyle;
+
+export const FormsContainer = styled.form`
+    width: 34%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    & > * + * {
+        margin-top: 1rem;
+    }
+
+    a {
+        color: ${colors.secondaryText};
+    }
+
+    input {
+        width: 90%;
+        height: 3rem;
+        padding: 0 1rem;
+        border-radius: .5rem;
+        outline-style: none;
+        border: none;
+        
+        &[type=submit] {
+            background-color: ${colors.button};
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        &::placeholder {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+        }
+    }
+`;
