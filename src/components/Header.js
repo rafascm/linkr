@@ -48,6 +48,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;  
     align-items: center;
     background-color: ${colors.bgHeader};
+    z-index: 999;
 
     h1 {
         font-size: 2.75rem;

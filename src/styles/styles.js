@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Oswald', sans-serif;
         font-size: 2rem;
     }
+
+    #root {
+        width: 100vw;
+    }
 `;
 
 export default GlobalStyle;
@@ -71,27 +75,5 @@ export const FormsContainer = styled.form`
             font-family: 'Oswald', sans-serif;
             font-size: 1.3rem;
         }
-    }
-`;
-
-export const TitleContainer = styled.div`
-    width: 66%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${colors.bgHeader};
-
-    & > div {
-        width: 60%;
-    }
-
-    h1 {
-        font-size: 8rem;
-        color: ${colors.secondaryText};
-    }
-    h2 {
-        font-size: 3rem;
-        color: ${colors.secondaryText};
     }
 `;
