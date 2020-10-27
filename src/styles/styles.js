@@ -64,6 +64,7 @@ export const FormsContainer = styled.form`
             color: white;
             font-family: 'Oswald', sans-serif;
             font-size: 1.3rem;
+            pointer-events: ${({ clicked }) => clicked ? 'none' : 'auto'};
         }
 
         &::placeholder {

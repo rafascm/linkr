@@ -17,6 +17,9 @@ const App = () => {
                     <Route path='/sign-up'>
                         <SignUp />
                     </Route>
+                    <Route path='/timeline'>
+                        
+                    </Route>
                 </Switch>
             </Router>
         </UserProvider>
