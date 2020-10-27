@@ -14,7 +14,6 @@ const Post = ({ post }) => {
         linkImage
     } = post;
 
-    console.log(user);
     return (
         <Container>
             <ImageContainer>
@@ -22,7 +21,7 @@ const Post = ({ post }) => {
                 <HeartIcon />
                 <p>{likes.length} likes</p>
             </ImageContainer>
-            <div>
+            <TextContainer>
                 <InfoContainer>
                     <h2>{user.username}</h2>
                     <h3>{text}</h3>
@@ -31,11 +30,11 @@ const Post = ({ post }) => {
                     <div>
                         <h1>{linkTitle}</h1>
                         <p>{linkDescription}</p>
-                        <p>{link}</p>
+                        <h6>{link}</h6>
                     </div>
                     <img src={linkImage} />
                 </PreviewContainer>
-            </div>
+            </TextContainer>
         </Container>
     );
 }
@@ -49,6 +48,7 @@ const Container = styled.div`
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
+
 `;
 const ImageContainer = styled.div`
     display: flex;
@@ -76,10 +76,16 @@ const HeartIcon = styled(IoIosHeartEmpty)`
     font-size: 2rem;
 `;
 
+const TextContainer = styled.div`
+    width: 100%;
+`;
+
 const InfoContainer = styled.div`
     width: 100%;
+    margin-bottom: 1rem;
 
     & > h2 {
+        margin: 1rem 0;
         font-family: 'Lato', sans-serif;
         color: ${colors.secondaryText};
         font-size: 1.2rem;
@@ -92,29 +98,45 @@ const InfoContainer = styled.div`
 `;
 
 const PreviewContainer = styled.div`
+    width: 100%;
     display: flex;
     border-radius: 1rem;
     border: .05rem solid ${colors.mainText};
+    justify-content: space-between;
+    margin-bottom: 1rem;
     
     & > img {
-        width: 10rem;
-        height: 10rem;
+        width: 15rem;
+        height: 15rem;
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
     }
 
-    h1 {
-        font-family: 'Lato', sans-serif;
-        font-size: 1rem;
+    & > div {
+        padding: 1rem;
+
+        & > * + * {
+            margin-top: 1rem;
+        }
+        
+        & > h1 {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            color: ${colors.mainText};
+            overflow-wrap: break-word;
+        }
+
+        & > p {
+            font-size: .9rem;
+            color: ${colors.mainText};
+            overflow-wrap: break-word;
+        }
+
+        & > h6 {
+            font-size: .7rem;
+            color: ${colors.mainText};
+            text-overflow: ellipsis;
+        }
+
     }
 `;
-/*
-id: 12
-likes: []
-link: "https://youtu.be/5qap5aO4i9A"
-linkDescription: "Thank you for listening, I hope you will have a good time here :) 🎼 Listen to the playlist on Spotify, Apple music and more → https://bit.ly/chilledcow-playl..."
-linkImage: "https://i.ytimg.com/vi/5qap5aO4i9A/maxresdefault_live.jpg"
-linkTitle: "lofi hip hop radio - beats to relax/study to"
-text: "#lofi"
-user:
-    avatar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgA"
-    id: 6
-    username: "rafasm"*/

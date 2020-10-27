@@ -1,6 +1,5 @@
 import Axios from 'axios';
 import React, { useState, createContext, useContext } from 'react';
-import UserContext from './UserContext';
 
 const PostsContext = createContext();
 
@@ -11,10 +10,19 @@ export const PostsProvider = (props) => {
 
     const updatePostsList = (config) => {
         Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2', config)
-            .catch(() => alert('erro'))
-            .then(({ data }) => setPostsList([...data.posts]));
+            .catch(errorHandler)
+            .then(({ data }) => processPosts(data));
     }
 
+    const processPosts = (data) => {
+        !data.posts.length && alert('Nenhum post encontrado');
+        setPostsList([...data.posts])
+    }
+
+    const errorHandler = () => {
+        alert('Houve uma falha ao obter os posts, por favor atualize a página');
+    }
+    
     return (
         <PostsContext.Provider
             value={{

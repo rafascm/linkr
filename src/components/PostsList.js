@@ -2,12 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
 import PostsContext from '../contexts/PostsContext';
 import Post from './Post.js';
-import Axios from 'axios';
 
 const PostsList = () => {
-    const { postsList, setPostsList, updatePostsList } = useContext(PostsContext);
-
-    console.log(postsList);
+    const { postsList, updatePostsList } = useContext(PostsContext);
 
     const { User } = useContext(UserContext);
     const { token } = User;

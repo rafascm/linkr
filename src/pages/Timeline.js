@@ -26,7 +26,7 @@ export default Timeline;
 
 const Container = styled.div`
     max-width: 64rem;
-    margin: 0 auto;
+    margin: 0 auto 3rem auto;
     height: 100%;
     padding: 6rem 2rem 2rem 2rem;
     
