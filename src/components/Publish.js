@@ -4,9 +4,11 @@ import { colors } from '../styles/styles';
 import UserContext from '../contexts/UserContext';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import PostsContext from '../contexts/PostsContext';
 
 const Publish = () => {
     const { User } = useContext(UserContext);
+    const { updatePostsList } = useContext(PostsContext);
     const { token, user } = User;
 
     const [link, setLink] = useState('');
@@ -15,7 +17,7 @@ const Publish = () => {
     const [hasBeenClicked, setHasBeenClicked] = useState(false);
 
     const [config] = useState({ headers: { 'user-token': token } });
-    
+
     const history = useHistory();
 
     const publishClickHandler = (e) => {
@@ -39,6 +41,7 @@ const Publish = () => {
         setLink('');
         setText('');
         setHasBeenClicked(false);
+        updatePostsList(config);
         history.push('/timeline');
     }
 
@@ -100,7 +103,7 @@ const InputContainer = styled.form`
     h3 {
         width: 100%;
         color: ${colors.mainText};
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         margin-bottom: .5rem;
     }
 
