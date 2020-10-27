@@ -71,7 +71,7 @@ const SignUp = () => {
                     placeholder='picture url'
                     onChange={(e) => setPictureUrl(e.target.value)}
                 />
-                <input type='submit' placeholder='Sign Up' clicked={hasBeenClicked}/>
+                <input type='submit' placeholder='Sign Up' clicked={hasBeenClicked.toString()}/>
                 <Link to='/'>Switch back to log in</Link>
             </FormsContainer>
         </Container>

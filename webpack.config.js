@@ -28,7 +28,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'public'),
     publicPath: "/",
     compress: true,
-    port: 9000,
+    port: 8000,
     historyApiFallback: true,
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development"
