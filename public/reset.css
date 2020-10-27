@@ -129,6 +129,8 @@ html {
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 
+ 
+
 a:focus {
     outline: thin dotted;
 }
@@ -140,6 +142,10 @@ a:focus {
 a:active,
 a:hover {
     outline: 0;
+}
+
+a{
+    outline-style: none;
 }
 
 /**

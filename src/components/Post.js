@@ -15,6 +15,7 @@ const Post = ({ post }) => {
     } = post;
 
     console.log(user);
+    
     return (
         <Container>
             <ImageContainer>

@@ -10,7 +10,7 @@ export const PostsProvider = (props) => {
     const [postsList, setPostsList] = useState([]);
 
     const updatePostsList = (config) => {
-        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2', config)
+        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=3', config)
             .catch(() => alert('erro'))
             .then(({ data }) => setPostsList([...data.posts]));
     }
