@@ -14,28 +14,36 @@ const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [hasBeenClicked, setHasBeenClicked] = useState(false);
     
     const checkError = () => {
         if(email && password) return true;
         return false;
     }
 
+    const errorHandler = () => {
+        alert('Usuário/Senha inválida!');
+        setHasBeenClicked(false);
+    }
+
     const signInClickHandler = (e) => {
         e.preventDefault();
 
         setIsLoading(true);
+        setHasBeenClicked(true);
 
         if(checkError()){
-        Axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in',{ 'email': email  , 'password': password })
+        Axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in',{ email, password })
             .then(({ data }) => {
                 setEmail('')
                 setPassword('')
                 setUser({ ...data })
                 history.push("/timeline")
             })
-            .catch(() => alert("Usuário/Senha inválidos!"));
+            .catch(errorHandler);
         } else{
-            alert("Preencha todos os campos!")
+            alert("Preencha todos os campos!");
+            setHasBeenClicked(false);
         }        
     }    
 
@@ -52,9 +60,9 @@ const SignIn = () => {
                     onChange={e => setPassword(e.target.value)} 
                     value={password}/>
 
-                    <input type='submit' placeholder='Sign In'/>
+                    <input type='submit' placeholder='Sign In' clicked={hasBeenClicked.toString()}/>
 
-                    <Link to='/signUp'>Click Here To Sign Up</Link>                
+                    <Link to='/sign-up'>Click Here To Sign Up</Link>                
 
             </FormsContainer>                          
         </Container>
