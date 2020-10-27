@@ -21,8 +21,8 @@ const Trending = () => {
 
             <section>
                 {hashtagList && hashtagList.map(hashtag => 
-                <Link key={hashtag.id} to={`/${hashtag.name}`}>
-                    <p>#{hashtag.name}</p>
+                <Link key={hashtag.id} to={`/${hashtag.name}`}>                    
+                        <p># {hashtag.name}</p>                    
                 </Link> )}
             </section>
 
@@ -35,10 +35,10 @@ export default Trending;
 const Container = styled.aside`
     position: fixed;
     top: 11.5rem;
-    right: calc(12.5vw);
+    left: calc(50vw + 13rem);
     display: flex;
     flex-direction: column;    
-    width: 25vw;       
+    width: 20vw;       
     height: auto;
     border-radius: 1rem;
     background-color: ${colors.bgMain};
