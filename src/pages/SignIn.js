@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FormsContainer } from '../styles/styles';
@@ -10,11 +10,18 @@ const SignIn = () => {
 
     const history = useHistory();
 
-    const { setUser } = useContext(UserContext);
+    const { setUser, isLogged, setIsLogged } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [hasBeenClicked, setHasBeenClicked] = useState(false);
+
+    useEffect(() => {
+        if(isLogged){            
+            setIsLogged(false);
+            setUser({});
+        }        
+    },[]);
     
     const checkError = () => {
         if(email && password) return true;
@@ -28,17 +35,17 @@ const SignIn = () => {
 
     const signInClickHandler = (e) => {
         e.preventDefault();
-
-        setIsLoading(true);
+        
         setHasBeenClicked(true);
 
         if(checkError()){
         Axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_in',{ email, password })
             .then(({ data }) => {
-                setEmail('')
-                setPassword('')
-                setUser({ ...data })
-                history.push("/timeline")
+                setEmail('');
+                setPassword('');
+                setIsLogged(true);
+                setUser({ ...data });
+                history.push("/timeline");
             })
             .catch(errorHandler);
         } else{
