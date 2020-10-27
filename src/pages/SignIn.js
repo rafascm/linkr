@@ -1,10 +1,10 @@
 import React from 'react';
-import SignUp from './SignUp';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
     return (
         <>
-            <SignUp />
+            <Link to='/sign-up'>clica</Link>
         </>
     );
 }
