@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormsContainer } from '../styles/styles';
 import { Link } from 'react-router-dom';
-import TitleComponent from '../components/TitleComponent';
+import TitleComponent from '../components/Title';
 import styled from 'styled-components';
 
 
