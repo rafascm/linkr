@@ -119,6 +119,8 @@ const PreviewContainer = styled.div`
     & > div {
         padding: 1rem;
 
+        word-break: break-word;
+
         & > * + * {
             margin-top: 1rem;
         }
