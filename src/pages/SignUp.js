@@ -1,10 +1,14 @@
 import React from 'react';
-import SignUp from './SignUp';
-import { FormsContainer } from '../styles/styles'
+import { FormsContainer } from '../styles/styles';
+import { Link } from 'react-router-dom';
+import TitleComponent from '../components/TitleComponent';
+import styled from 'styled-components';
 
-const SignIn = () => {
+
+const SignUp = () => {
     return (
-        <>
+        <Container>  
+            <TitleComponent />
             <FormsContainer>
                 <input type='email' placeholder='e-mail'/>
                 <input type='password' placeholder='password'/>
@@ -13,9 +17,15 @@ const SignIn = () => {
                 <input type='submit' placeholder='Sign Up'/>
                 <Link to='/'>Switch Back to log in</Link> 
             </FormsContainer>
-            <SignUp />
-        </>
+        </Container>
+        
     );
 }
 
-export default SignIn;
+export default SignUp;
+
+const Container = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+`;
