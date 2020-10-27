@@ -6,12 +6,15 @@ export default UserContext;
 
 export const UserProvider = (props) => {
     const [User, setUser] = useState({});
+    const [isLogged, setIsLogged] = useState(false);
     
     return (
         <UserContext.Provider
             value={{
                 User,
-                setUser
+                setUser,
+                isLogged,
+                setIsLogged
             }}
         >
             {props.children}
