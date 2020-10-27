@@ -4,6 +4,7 @@ import GlobalStyle from '../styles/styles';
 import { UserProvider } from '../contexts/UserContext';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
+import Timeline from '../pages/Timeline';
 
 const App = () => {
     return (
@@ -18,7 +19,7 @@ const App = () => {
                         <SignUp />
                     </Route>
                     <Route path='/timeline'>
-                        
+                        <Timeline />
                     </Route>
                 </Switch>
             </Router>

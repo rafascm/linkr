@@ -60,7 +60,7 @@ const SignIn = () => {
                     onChange={e => setPassword(e.target.value)} 
                     value={password}/>
 
-                    <input type='submit' placeholder='Sign In' clicked={hasBeenClicked.toString()}/>
+                    <input type='submit' value='Sign In' clicked={hasBeenClicked.toString()}/>
 
                     <Link to='/sign-up'>Click Here To Sign Up</Link>                
 

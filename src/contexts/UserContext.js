@@ -5,12 +5,12 @@ const UserContext = createContext();
 export default UserContext;
 
 export const UserProvider = (props) => {
-    const [user, setUser] = useState({});
+    const [User, setUser] = useState({});
     
     return (
         <UserContext.Provider
             value={{
-                user,
+                User,
                 setUser
             }}
         >
