@@ -24,7 +24,7 @@ const SignUp = () => {
         if (email && password && username && pictureUrl) {
             Axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/sign_up',
                 { email, password, username, pictureUrl })
-                .catch(() => alert('Usuário já cadastrado'))
+                .catch(errorHandler)
                 .then(({ data }) => processSignUp(data));
         }
 
@@ -32,6 +32,11 @@ const SignUp = () => {
             alert('Preencha todos os campos');
             setHasBeenClicked(false);
         }
+    }
+
+    const errorHandler = () => {
+        alert('Usuário já cadasstrado');
+        setHasBeenClicked(false);
     }
 
     const processSignUp = (data) => {
