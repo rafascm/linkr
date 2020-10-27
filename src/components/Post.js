@@ -49,6 +49,10 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
 
+    &:last-child {
+        margin-bottom: 3rem;
+    }
+
 `;
 const ImageContainer = styled.div`
     display: flex;
