@@ -28,7 +28,7 @@ const Container = styled.div`
     max-width: 64rem;
     margin: 0 auto;
     height: 100%;
-    padding: 6rem 2rem 2rem 2rem;
+    padding-top: 6rem;
     
     & > h2 {
         width: 100%;

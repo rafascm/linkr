@@ -15,6 +15,7 @@ export const UserProvider = (props) => {
             .catch(() => alert('erro'))
             .then(({ data }) => setHashtagList([...data.hashtags]));
     }
+    const [isLogged, setIsLogged] = useState(false);
     
     return (
         <UserContext.Provider
@@ -22,7 +23,9 @@ export const UserProvider = (props) => {
                 User,
                 setUser,
                 hashtagList,
-                updateHashtagList
+                updateHashtagList,
+                isLogged,
+                setIsLogged
             }}
         >
             {props.children}
