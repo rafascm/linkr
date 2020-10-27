@@ -12,8 +12,6 @@ const Trending = () => {
 
     useEffect(() => updateHashtagList(config), []);
 
-    console.log(hashtagList)
-
     return (
         <Container>
 
@@ -35,10 +33,10 @@ export default Trending;
 const Container = styled.aside`
     position: fixed;
     top: 11.5rem;
-    left: calc(50vw + 13rem);
+    left: calc(50vw + 15rem);
     display: flex;
     flex-direction: column;    
-    width: 20vw;       
+    width: 16.7rem;       
     height: auto;
     border-radius: 1rem;
     background-color: ${colors.bgMain};
@@ -64,6 +62,10 @@ const Container = styled.aside`
         background-color: ${colors.bgHeader};
         border-radius: 0 0 1rem 1rem;
         padding: 1rem 0 1rem 0;
+
+        & > a {
+            text-decoration: none;
+        }
 
         p{
             cursor:pointer;
