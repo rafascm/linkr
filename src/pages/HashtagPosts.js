@@ -7,12 +7,12 @@ import { colors } from '../styles/styles';
 import PostsList from '../components/PostsList';
 
 const HashtagPosts = () => {
-    const { clickedHashtag } = useContext(PostsContext);
+    const { clickedHashTag } = useContext(PostsContext);
     return (
         <>
             <Container>
                 <Header />
-                <h2># {clickedHashtag}</h2>
+                <h2># {clickedHashTag}</h2>
                 <Content>                    
                     <PostsList />
                 </Content>
