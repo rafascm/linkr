@@ -33,7 +33,13 @@ const Post = ({ post }) => {
                 <InfoContainer>
                     <h2>{user.username}</h2>
                     <h3>
-                        <ReactHashtag onHashtagClick={val => HashtagHandler(val)}>
+                        <ReactHashtag 
+                            renderHashtag={(val) => (
+                                <Hashtag key={val} onClick={() => (
+                                    HashtagHandler(val)
+                                )}>
+                                    {val}
+                                </Hashtag>)}>
                             {text}
                         </ReactHashtag>
                     </h3>
@@ -158,4 +164,9 @@ const PreviewContainer = styled.a`
         }
 
     }
+`;
+
+const Hashtag = styled.span`
+   color: ${colors.secondaryText};
+   font-weight: bold;
 `;
