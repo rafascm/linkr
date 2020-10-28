@@ -26,13 +26,13 @@ const Post = ({ post }) => {
                     <h2>{user.username}</h2>
                     <h3>{text}</h3>
                 </InfoContainer>
-                <PreviewContainer>
-                    <div>
-                        <h1>{linkTitle}</h1>
-                        <p>{linkDescription}</p>
-                        <h6>{link}</h6>
-                    </div>
-                    <img src={linkImage} />
+                <PreviewContainer href={link}  target="_blank">
+                        <div>
+                            <h1>{linkTitle}</h1>
+                            <p>{linkDescription}</p>
+                            <h6>{link}</h6>
+                        </div>
+                        <img src={linkImage} />
                 </PreviewContainer>
             </TextContainer>
         </Container>
@@ -101,13 +101,14 @@ const InfoContainer = styled.div`
     }
 `;
 
-const PreviewContainer = styled.div`
+const PreviewContainer = styled.a`
     width: 100%;
     display: flex;
     border-radius: 1rem;
     border: .05rem solid ${colors.mainText};
     justify-content: space-between;
     margin-bottom: 1rem;
+    text-decoration: none;
     
     & > img {
         width: 15rem;

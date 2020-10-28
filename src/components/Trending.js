@@ -45,10 +45,10 @@ export default Trending;
 const Container = styled.aside`
     position: fixed;
     top: 11.5rem;
-    left: calc(50vw + 13rem);
+    left: calc(50vw + 15rem);
     display: flex;
     flex-direction: column;    
-    width: 20vw;       
+    width: 16.7rem;       
     height: auto;
     border-radius: 1rem;
     background-color: ${colors.bgMain};
@@ -75,7 +75,20 @@ const Container = styled.aside`
         border-radius: 0 0 1rem 1rem;
         padding: 1rem 0 1rem 0;
 
+<<<<<<< HEAD
        
+=======
+        & > a {
+            text-decoration: none;
+        }
+
+        p{
+            cursor:pointer;
+            color: ${colors.secondaryText};
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+>>>>>>> 3d1c0550a1bd94fcf1bb4b3dd7b5121ce0500f3c
     }
 `;
  const Hashtag = styled.li`
