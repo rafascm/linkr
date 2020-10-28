@@ -16,7 +16,7 @@ const PostsList = () => {
     return (
         <>
             {isLoadingPosts
-                ? <Loading src="./media/loading.gif" />
+                ? <Loading src="/media/loading.gif" />
                 : (postsList.map(post => (
                     <Post post={post} key={post.id} />
                 )))
