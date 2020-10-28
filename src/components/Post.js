@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import { IoIosHeartEmpty } from "react-icons/io";
 import ReactHashtag from "react-hashtag";
+import PostsContext from '../contexts/PostsContext';
 
 const Post = ({ post }) => {
 
     const history = useHistory();
+    const { setClickedUser, setClickedHashtag } = useContext(PostsContext);
+
     const {
         user,
         text,
@@ -18,26 +21,32 @@ const Post = ({ post }) => {
         linkImage
     } = post;
 
-    const HashtagHandler = (tag) => {
-        history.push(`/${tag.substring(1)}`);
+    const hashtagClickedHandler = (tag) => {
+        setClickedHashtag(tag.substring(1));
+        history.push(`/hashtag/${tag.substring(1)}`);
+    }
+
+    const userClickedHandler = (user) => {
+        setClickedUser(user);
+        history.push(`/user/${user.id}`)
     }
 
     return (
         <Container>
             <ImageContainer>
-                <img src={user.avatar} />
+                <img src={user.avatar} onClick={()=> userClickedHandler(user)}/>
                 <HeartIcon />
                 <p>{likes.length} likes</p>
             </ImageContainer>
             <TextContainer>
                 <InfoContainer>
-                    <h2>{user.username}</h2>
+                    <h2 onClick={()=> userClickedHandler(user)}>{user.username}</h2>
                     <h3>
                         <ReactHashtag
                             renderHashtag={(val) => (
                                 <Hashtag
                                     key={val}
-                                    onClick={() => (HashtagHandler(val))}
+                                    onClick={() => (hashtagClickedHandler(val))}
                                 >
                                     {val}
                                 </Hashtag>)}>

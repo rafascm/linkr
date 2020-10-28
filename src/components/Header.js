@@ -1,26 +1,39 @@
-import React, {useContext, useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { colors } from '../styles/styles';
 import UserContext from '../contexts/UserContext'
+import PostsContext from '../contexts/PostsContext';
 
 const Header = () => {
 
     const { User } = useContext(UserContext);
-    const { user } = User;
+    const { user, token } = User;
+    const [config] = useState({ headers: { 'user-token': token } });
 
-    const [hasClicked,setHasClicked] = useState(false)
+    const { updatePostsList, setClickedUser, setClickedHashtag } = useContext(PostsContext);
 
-    const dropMenu = () =>{
+    const [hasClicked, setHasClicked] = useState(false);
+
+    const history = useHistory();
+
+    const dropMenu = () => {
         setHasClicked(!hasClicked)
     }
-    
 
-    return(
+    const logoClickHandler = () => {
+        setClickedHashtag('');
+        setClickedUser({});
+
+        updatePostsList(config);
+        history.push('/timeline')
+    }
+
+    return (
         <HeaderContainer>
-            <h1>linkr</h1>
-            <div>                
+            <h1 onClick={() => logoClickHandler()}>linkr</h1>
+            <div>
                 <span onClick={() => dropMenu()}>
                     {hasClicked ? <UpIcon /> : (<DropDownIcon />)}
                 </span>
@@ -84,7 +97,7 @@ const UpIcon = styled(FaChevronUp)`
 const DropDownMenu = styled.div`
     z-index:-999;
     position: absolute;
-    top: ${({clicked}) => clicked === "true" ? "4rem" : "-7rem"};
+    top: ${({ clicked }) => clicked === "true" ? "4rem" : "-7rem"};
     right: 0;
     display: flex;
     flex-direction: column;
@@ -99,6 +112,6 @@ const DropDownMenu = styled.div`
     p {
         cursor: pointer;
         margin: 0.3rem;
-        color: ${({clicked}) => clicked === "true" ? colors.secondaryText : colors.bgHeader};
+        color: ${({ clicked }) => clicked === "true" ? colors.secondaryText : colors.bgHeader};
     }
 `;

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import UserContext from '../contexts/UserContext';
+import PostsContext from '../contexts/PostsContext';
 
 const Trending = () => {
 
@@ -12,11 +13,14 @@ const Trending = () => {
     const { User, updateHashtagList, hashtagList } = useContext(UserContext);
     const { token } = User;
     const [config] = useState({ headers: { 'user-token': token } });
-
+    
+    const { setClickedHashtag } = useContext(PostsContext);
+    
     useEffect(() => updateHashtagList(config), []);
 
     const HashtagHandler = (tag) => {
-        history.push(`/${tag.substring(1)}`);
+        setClickedHashtag(tag.substring(1));
+        history.push(`/hashtag/${tag.substring(1)}`);
     }
 
     return (
