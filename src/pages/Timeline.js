@@ -40,12 +40,13 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-    width: 70%;
-    height: 100%;
-    
+
     display:flex;
     flex-direction:column;
-    align-items:center; 
+    align-items:center;
+    
+    width: 70%;
+    height: 100%;    
 
     & > * + * {
         margin-top: 2rem;
