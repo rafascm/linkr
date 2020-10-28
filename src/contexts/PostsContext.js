@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext } from 'react';
 
 const PostsContext = createContext();
 
@@ -7,13 +7,27 @@ export default PostsContext;
 
 export const PostsProvider = (props) => {
     const [postsList, setPostsList] = useState([]);
+    const [clickedUser, setClickedUser] = useState({});
+    const [clickedHashTag, setClickedHashtag] = useState('');
     const [isLoadingPosts, setIsLoadingPosts] = useState(false);
 
-    const updatePostsList = (config) => {
+    const headURL = 'https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr';
+    const tailURL = 'posts?offset=0&limit=20';
 
-        setIsLoadingPosts(true);
+    const userHasBeenClicked = Object.keys(clickedUser).length;
+
+    const updatePostsList = (config) => {
+        const url = (
+            clickedHashTag ? 
+                `${headURL}/hashtags/${clickedHashTag}/${tailURL}` : 
+                userHasBeenClicked ?
+                    `${headURL}/users/${clickedUser.id}/${tailURL}` :
+                    `${headURL}/${tailURL}`
+        );    
         
-        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=20', config)
+        setIsLoadingPosts(true);
+    
+        Axios.get(url, config)
             .catch(errorHandler)
             .then(({ data }) => processPosts(data));
     }
@@ -35,7 +49,11 @@ export const PostsProvider = (props) => {
                 setIsLoadingPosts,
                 postsList,
                 setPostsList,
-                updatePostsList
+                updatePostsList,
+                clickedUser,
+                setClickedUser,
+                clickedHashTag,
+                setClickedHashtag
             }}
         >
             {props.children}

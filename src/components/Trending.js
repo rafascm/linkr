@@ -1,31 +1,31 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactHashtag from "react-hashtag";
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import UserContext from '../contexts/UserContext';
+import PostsContext from '../contexts/PostsContext';
 
 const Trending = () => {
-    
+
     const history = useHistory();
 
     const { User, updateHashtagList, hashtagList } = useContext(UserContext);
     const { token } = User;
     const [config] = useState({ headers: { 'user-token': token } });
-
+    
+    const { setClickedHashtag } = useContext(PostsContext);
+    
     useEffect(() => updateHashtagList(config), []);
 
-    const HashtagHandler = (tag) =>{
-        history.push(`/${tag.substring(1)}`);
+    const HashtagHandler = (tag) => {
+        setClickedHashtag(tag.substring(1));
+        history.push(`/hashtag/${tag.substring(1)}`);
     }
-
-    console.log(hashtagList)
 
     return (
         <Container>
-
             <div><h2>trending</h2></div>
-
             <section>
                 {hashtagList && hashtagList.map(hashtag =>
                     <Hashtag key={hashtag.id}>
@@ -33,9 +33,8 @@ const Trending = () => {
                             {`#${hashtag.name}`}
                         </ReactHashtag>
                     </Hashtag>
-                 )}
+                )}
             </section>
-
         </Container>
     );
 }
@@ -75,23 +74,20 @@ const Container = styled.aside`
         border-radius: 0 0 1rem 1rem;
         padding: 1rem 0 1rem 0;
 
-<<<<<<< HEAD
-       
-=======
         & > a {
             text-decoration: none;
         }
 
-        p{
+        p {
             cursor:pointer;
             color: ${colors.secondaryText};
             padding-left: 1.5rem;
             margin-bottom: 0.5rem;
         }
->>>>>>> 3d1c0550a1bd94fcf1bb4b3dd7b5121ce0500f3c
     }
 `;
- const Hashtag = styled.li`
+
+const Hashtag = styled.li`
     z-index: 2;
     cursor:pointer;
     color: ${colors.secondaryText};
