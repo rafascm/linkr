@@ -1,10 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import ReactHashtag from "react-hashtag";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import UserContext from '../contexts/UserContext';
 
 const Trending = () => {
+
+    const history = useHistory();
 
     const { User, updateHashtagList, hashtagList } = useContext(UserContext);
     const { token } = User;
@@ -12,18 +15,22 @@ const Trending = () => {
 
     useEffect(() => updateHashtagList(config), []);
 
+    const HashtagHandler = (tag) => {
+        history.push(`/${tag.substring(1)}`);
+    }
+
     return (
         <Container>
-
             <div><h2>trending</h2></div>
-
             <section>
-                {hashtagList && hashtagList.map(hashtag => 
-                <Link key={hashtag.id} to={`/${hashtag.name}`}>                    
-                        <p># {hashtag.name}</p>                    
-                </Link> )}
+                {hashtagList && hashtagList.map(hashtag =>
+                    <Hashtag key={hashtag.id}>
+                        <ReactHashtag onHashtagClick={val => HashtagHandler(val)}>
+                            {`#${hashtag.name}`}
+                        </ReactHashtag>
+                    </Hashtag>
+                )}
             </section>
-
         </Container>
     );
 }
@@ -67,7 +74,7 @@ const Container = styled.aside`
             text-decoration: none;
         }
 
-        p{
+        p {
             cursor:pointer;
             color: ${colors.secondaryText};
             padding-left: 1.5rem;
@@ -75,3 +82,11 @@ const Container = styled.aside`
         }
     }
 `;
+
+const Hashtag = styled.li`
+    z-index: 2;
+    cursor:pointer;
+    color: ${colors.secondaryText};
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+ `;

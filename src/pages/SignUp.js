@@ -6,10 +6,9 @@ import { FormsContainer } from '../styles/styles';
 import { Link, useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
-const SignUp = () => {
-    const history = useHistory();
+const SignUp = () => {   
 
-    const { setUser } = useContext(UserContext);
+    const { setUser, history } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');

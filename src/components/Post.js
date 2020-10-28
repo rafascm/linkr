@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import { IoIosHeartEmpty } from "react-icons/io";
+import ReactHashtag from "react-hashtag";
 
 const Post = ({ post }) => {
+
+    const history = useHistory();
     const {
         user,
         text,
@@ -13,6 +17,10 @@ const Post = ({ post }) => {
         linkDescription,
         linkImage
     } = post;
+
+    const HashtagHandler = (tag) => {
+        history.push(`/${tag.substring(1)}`);
+    }
 
     return (
         <Container>
@@ -24,15 +32,26 @@ const Post = ({ post }) => {
             <TextContainer>
                 <InfoContainer>
                     <h2>{user.username}</h2>
-                    <h3>{text}</h3>
+                    <h3>
+                        <ReactHashtag
+                            renderHashtag={(val) => (
+                                <Hashtag
+                                    key={val}
+                                    onClick={() => (HashtagHandler(val))}
+                                >
+                                    {val}
+                                </Hashtag>)}>
+                            {text}
+                        </ReactHashtag>
+                    </h3>
                 </InfoContainer>
-                <PreviewContainer href={link}  target="_blank">
-                        <div>
-                            <h1>{linkTitle}</h1>
-                            <p>{linkDescription}</p>
-                            <h6>{link}</h6>
-                        </div>
-                        <img src={linkImage} />
+                <PreviewContainer href={link} target="_blank">
+                    <div>
+                        <h1>{linkTitle}</h1>
+                        <p>{linkDescription}</p>
+                        <h6>{link}</h6>
+                    </div>
+                    <img src={linkImage} />
                 </PreviewContainer>
             </TextContainer>
         </Container>
@@ -146,4 +165,9 @@ const PreviewContainer = styled.a`
         }
 
     }
+`;
+
+const Hashtag = styled.span`
+   color: ${colors.secondaryText};
+   font-weight: bold;
 `;
