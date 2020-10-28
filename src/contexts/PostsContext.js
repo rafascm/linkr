@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext } from 'react';
 
 const PostsContext = createContext();
 
@@ -7,6 +7,7 @@ export default PostsContext;
 
 export const PostsProvider = (props) => {
     const [postsList, setPostsList] = useState([]);
+    const [clickedUser, setClickedUser] = useState({});
 
     const updatePostsList = (config) => {
         Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2', config)
