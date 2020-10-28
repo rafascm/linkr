@@ -17,7 +17,7 @@ const Trending = () => {
 
     const HashtagHandler = (tag) =>{
         history.push(`/${tag.substring(1)}`);
-    }     
+    }
 
     console.log(hashtagList)
 

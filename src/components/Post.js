@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
 import { IoIosHeartEmpty } from "react-icons/io";
+import ReactHashtag from "react-hashtag";
 
 const Post = ({ post }) => {
+
+    const history = useHistory();
     const {
         user,
         text,
@@ -13,6 +17,10 @@ const Post = ({ post }) => {
         linkDescription,
         linkImage
     } = post;
+
+    const HashtagHandler = (tag) =>{
+        history.push(`/${tag.substring(1)}`);
+    }
 
     return (
         <Container>
@@ -24,7 +32,11 @@ const Post = ({ post }) => {
             <TextContainer>
                 <InfoContainer>
                     <h2>{user.username}</h2>
-                    <h3>{text}</h3>
+                    <h3>
+                        <ReactHashtag onHashtagClick={val => HashtagHandler(val)}>
+                            {text}
+                        </ReactHashtag>
+                    </h3>
                 </InfoContainer>
                 <PreviewContainer href={link}  target="_blank">
                         <div>

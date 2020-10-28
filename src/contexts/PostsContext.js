@@ -13,7 +13,7 @@ export const PostsProvider = (props) => {
 
         setIsLoadingPosts(true);
         
-        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=2', config)
+        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=20', config)
             .catch(errorHandler)
             .then(({ data }) => processPosts(data));
     }
