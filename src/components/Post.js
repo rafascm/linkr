@@ -9,7 +9,7 @@ import PostsContext from '../contexts/PostsContext';
 const Post = ({ post }) => {
 
     const history = useHistory();
-    const { setClickedUser, setClickedHashtag } = useContext(PostsContext);
+    const { setClickedUser, setClickedHashtag, setIncreaseOffset } = useContext(PostsContext);
 
     const {
         user,
@@ -22,11 +22,13 @@ const Post = ({ post }) => {
     } = post;
 
     const hashtagClickedHandler = (tag) => {
+        setIncreaseOffset(0)
         setClickedHashtag(tag.substring(1));
         history.push(`/hashtag/${tag.substring(1)}`);
     }
 
     const userClickedHandler = (user) => {
+        setIncreaseOffset(0)
         setClickedUser(user);
         history.push(`/user/${user.id}`)
     }
@@ -76,6 +78,7 @@ const Container = styled.div`
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
+    
 
     &:last-child {
         margin-bottom: 3rem;

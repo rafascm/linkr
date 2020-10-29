@@ -7,7 +7,7 @@ import PostsContext from '../contexts/PostsContext';
 import Post from './Post.js';
 
 const PostsList = () => {
-    const { postsList, setPostsList, updatePostsList, increaseOffset, setIncreaseOffset } = useContext(PostsContext);
+    const { postsList, setPostsList, updatePostsList, increaseOffset, setIncreaseOffset, clickedUser, clickedHashTag } = useContext(PostsContext);
 
     const { User } = useContext(UserContext);
     const { token } = User;
@@ -19,7 +19,20 @@ const PostsList = () => {
 
     const loadFunc = () => {
 
-        Axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=${increaseOffset}&limit=5`, config)       
+        const tailURL = `posts?offset=${increaseOffset}&limit=5`;
+        const headURL = 'https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr';
+
+        const userHasBeenClicked = Object.keys(clickedUser).length;
+
+        const url = (
+            clickedHashTag ? 
+                `${headURL}/hashtags/${clickedHashTag}/${tailURL}` : 
+                userHasBeenClicked ?
+                    `${headURL}/users/${clickedUser.id}/${tailURL}` :
+                    `${headURL}/${tailURL}`
+        );
+
+        Axios.get(url,config)       
        .then(({ data }) => {
             setIncreaseOffset(increaseOffset + 5);
            if( !(data.posts.length > 0) ) setHasMore(false);
