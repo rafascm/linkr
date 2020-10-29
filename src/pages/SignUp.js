@@ -90,8 +90,21 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
+
+    @media (max-width: 1024px) {
+        & {
+            width: 100%;
+            display: block;
+        }
+    }
 `;
 
 const AnimatedContainer = styled(motion.div)`
     width: 34%;
+
+    @media (max-width: 1024px) {
+        & {
+            width: 100%;
+        }
+    }
 `;

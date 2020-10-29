@@ -115,11 +115,24 @@ const ImageContainer = styled.div`
     p {
         color: ${colors.secondaryText};
     }
+
+    @media (max-width: 1024px) {
+        img {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
 `;
 
 const HeartIcon = styled(IoIosHeartEmpty)`
     color: ${colors.secondaryText};
     font-size: 2rem;
+
+    @media (max-width: 1024px) {
+        & {
+            font-size: .9rem;
+        }
+    }
 `;
 
 const TextContainer = styled.div`
@@ -140,6 +153,16 @@ const InfoContainer = styled.div`
     & > h3 {
         font-size: 1rem;
         color: ${colors.mainText};
+    }
+
+    @media (max-width: 1024px) {
+        & > h2 {
+            margin: .5rem 0;
+            font-size: 1rem;
+        }
+        & > h3 {
+            font-size: 1rem;
+        }
     }
 `;
 
@@ -187,6 +210,22 @@ const PreviewContainer = styled.a`
             text-overflow: ellipsis;
         }
 
+    }
+
+    @media (max-width: 1024px) {
+        & {
+           
+        }
+
+        & > img {
+            display:none;
+        }
+
+        p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 2rem
+        }
     }
 `;
 

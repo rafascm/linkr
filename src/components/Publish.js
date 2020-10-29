@@ -103,6 +103,12 @@ const Container = styled.div`
         height: 4rem;
         margin-right: 1rem;
     }
+
+    @media (max-width: 1024px) {
+        & > img {
+            display: none;
+        }
+    }
 `;
 
 const InputContainer = styled.form`

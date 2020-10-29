@@ -87,6 +87,10 @@ const Container = styled.aside`
             margin-bottom: 0.5rem;
         }
     }
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
 `;
 
 const Hashtag = styled.li`
@@ -95,4 +99,5 @@ const Hashtag = styled.li`
     color: ${colors.secondaryText};
     padding-left: 1.5rem;
     margin-bottom: 0.5rem;
+
  `;
