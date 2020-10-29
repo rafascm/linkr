@@ -14,12 +14,14 @@ const Trending = () => {
     const { token } = User;
     const [config] = useState({ headers: { 'user-token': token } });
     
-    const { setClickedHashtag } = useContext(PostsContext);
+    const { setClickedHashtag, setClickedUser, updatePostsList } = useContext(PostsContext);
     
     useEffect(() => updateHashtagList(config), []);
 
     const HashtagHandler = (tag) => {
         setClickedHashtag(tag.substring(1));
+        updatePostsList(config);
+
         history.push(`/hashtag/${tag.substring(1)}`);
     }
 
