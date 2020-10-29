@@ -13,35 +13,32 @@ const PostsList = () => {
     const { token } = User;
     const [config] = useState({ headers: { 'user-token': token } });
     const [hasMore, setHasMore] = useState(true);
-    
+
 
     useEffect(() => updatePostsList(config), []);
 
     const loadFunc = () => {
 
-        Axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=${increaseOffset}&limit=5`, config)       
-       .then(({ data }) => {
-            setIncreaseOffset(increaseOffset + 5);
-           if( !(data.posts.length > 0) ) setHasMore(false);
-           setPostsList( prevPosts => [...prevPosts,...data.posts]);
-        });
-   
-}
+        Axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=${increaseOffset}&limit=5`, config)
+            .then(({ data }) => {
+                setIncreaseOffset(increaseOffset + 5);
+                if (!(data.posts.length > 0)) setHasMore(false);
+                setPostsList(prevPosts => [...prevPosts, ...data.posts]);
+            });
+
+    }
 
     return (
-        <>            
-
-            <InfiniteScroll               
+        <>
+            <StyledInfiniteScroll
                 loadMore={loadFunc}
                 hasMore={hasMore}
-                loader={<LoadingContainer ><Loading src="./media/loading.gif" /></LoadingContainer>}             
-                >
+                loader={<LoadingContainer ><Loading src="./media/loading.gif" /></LoadingContainer>}
+            >
 
                 {postsList.map(post => (<Post post={post} key={post.id} />))}
 
-            </InfiniteScroll>          
-            
-            
+            </StyledInfiniteScroll>
         </>
     );
 }
@@ -61,4 +58,10 @@ const LoadingContainer = styled.div`
 const Loading = styled.img`
     width: 10rem;
     height: auto;
+`;
+
+const StyledInfiniteScroll = styled(InfiniteScroll)`
+    & > * + * {
+        margin-top: 2rem;
+    }
 `;
