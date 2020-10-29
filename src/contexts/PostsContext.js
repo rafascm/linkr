@@ -6,36 +6,37 @@ const PostsContext = createContext();
 export default PostsContext;
 
 export const PostsProvider = (props) => {
-    const [postsList, setPostsList] = useState([]);
-    const [isLoadingPosts, setIsLoadingPosts] = useState(false);
+    const [postsList, setPostsList] = useState([]);    
+    const [increaseOffset, setIncreaseOffset] = useState(0);
 
-    const updatePostsList = (config) => {
-
-        setIsLoadingPosts(true);
+    const updatePostsList = (config) => {        
         
-        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=20', config)
+        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=5', config)
             .catch(errorHandler)
             .then(({ data }) => processPosts(data));
-    }
+    }   
 
     const processPosts = (data) => {
         !data.posts.length && alert('Nenhum post encontrado');
-        setPostsList([...data.posts]);
-        setIsLoadingPosts(false);
+        setPostsList([...data.posts]);        
     }
 
     const errorHandler = () => {
         alert('Houve uma falha ao obter os posts, por favor atualize a página');
     }
+
+    console.log(postsList)
     
     return (
         <PostsContext.Provider
-            value={{
-                isLoadingPosts,
-                setIsLoadingPosts,
+            value={{                
                 postsList,
                 setPostsList,
-                updatePostsList
+                updatePostsList,
+                processPosts,
+                errorHandler,
+                increaseOffset,
+                setIncreaseOffset
             }}
         >
             {props.children}

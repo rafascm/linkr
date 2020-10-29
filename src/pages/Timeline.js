@@ -13,8 +13,8 @@ const Timeline = () => {
             <Container>
                 <h2>timeline</h2>
                 <Content>
-                    <Publish />
-                    <PostsList />
+                    <Publish />                    
+                    <PostsList />                    
                 </Content>    
             </Container>
             <Trending />
