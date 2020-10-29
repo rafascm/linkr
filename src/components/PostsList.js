@@ -36,7 +36,7 @@ const PostsList = () => {
        .then(({ data }) => {
             setIncreaseOffset(increaseOffset + 5);
            if( !(data.posts.length > 0) ) setHasMore(false);
-           setPostsList( prevPosts => [...prevPosts,...data.posts]);
+           setPostsList( [...new Set([...postsList,...data.posts])]);
         });
    
     }

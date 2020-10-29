@@ -17,14 +17,16 @@ const Trending = () => {
     const [hashtagName, setHashtagName] = useState('');
 
     
-    const { setClickedHashtag } = useContext(PostsContext);
+    const { setClickedHashtag, setClickedUser, updatePostsList } = useContext(PostsContext);
     
     useEffect(() => updateHashtagList(config), []);
 
     const hashtagHandler = (tag) => {
         if(tag.charAt(0) === "#") tag = tag.substring(1);
         setClickedHashtag(tag);
-        history.push(`/hashtag/${tag}`);        
+        updatePostsList(config);
+        history.push(`/hashtag/${tag}`);
+        // setHashtagName('');
     };
 
     const searchHashtagHandler = (e) =>{
