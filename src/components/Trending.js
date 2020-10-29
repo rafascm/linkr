@@ -22,6 +22,7 @@ const Trending = () => {
     useEffect(() => updateHashtagList(config), []);
 
     const hashtagHandler = (tag) => {
+        if(tag.charAt(0) === "#") tag = tag.substring(1);
         setClickedHashtag(tag);
         history.push(`/hashtag/${tag}`);        
     };
@@ -55,7 +56,7 @@ const Trending = () => {
             <section>
                 {hashtagList && hashtagList.map(hashtag =>
                     <Hashtag key={hashtag.id}>
-                        <ReactHashtag onHashtagClick={val => HashtagHandler(val)}>
+                        <ReactHashtag onHashtagClick={val => hashtagHandler(val)}>
                             {`#${hashtag.name}`}
                         </ReactHashtag>
                     </Hashtag>
