@@ -38,6 +38,7 @@ const Container = styled.div`
     height: 100%;
     padding-top: 6rem;
     
+    
     & > h2 {
         width: 100%;
         color: ${colors.secondaryText};
