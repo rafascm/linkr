@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import UserContext from '../contexts/UserContext';
 import PostsContext from '../contexts/PostsContext';
-import Post from './Post.js'; 
+import Post from './Post.js';
 
 const PostsList = () => {
     const { postsList, setPostsList, updatePostsList, increaseOffset, setIncreaseOffset } = useContext(PostsContext);

@@ -1,53 +1,46 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { colors } from '../styles/styles';
 import Header from '../components/Header';
-import Publish from '../components/Publish';
 import Trending from '../components/Trending';
+import PostsContext from '../contexts/PostsContext';
+import { colors } from '../styles/styles';
 import PostsList from '../components/PostsList';
 
-const Timeline = () => {
-    
+const HashtagPosts = () => {
+    const { clickedHashTag } = useContext(PostsContext);
     return (
         <>
-            <Header />
             <Container>
-                <h2>timeline</h2>
-                <Content>
-                    <Publish />                    
-                    <PostsList />                    
-                </Content>    
+                <Header />
+                <h2># {clickedHashTag}</h2>
+                <Content>                    
+                    <PostsList />
+                </Content>
+                <Trending />
             </Container>
-            <Trending />
         </>
     );
 }
 
-export default Timeline;
+export default HashtagPosts;
 
 const Container = styled.div`
     max-width: 64rem;
     margin: 0 auto;
     height: 100%;
     padding-top: 6rem;
-    
+
     & > h2 {
         width: 100%;
         color: ${colors.secondaryText};
         font-size: 2.5rem;
         margin-bottom: 3rem;
     }
-
 `;
 
 const Content = styled.div`
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    
     width: 70%;
-    height: 100%;    
+    height: 100%;
 
     & > * + * {
         margin-top: 2rem;

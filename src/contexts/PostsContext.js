@@ -1,17 +1,34 @@
 import Axios from 'axios';
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext } from 'react';
 
 const PostsContext = createContext();
 
 export default PostsContext;
 
 export const PostsProvider = (props) => {
-    const [postsList, setPostsList] = useState([]);    
-    const [increaseOffset, setIncreaseOffset] = useState(0);
+    const [postsList, setPostsList] = useState([]);
+    const [clickedUser, setClickedUser] = useState({});
+    const [clickedHashTag, setClickedHashtag] = useState('');    
+    const [increaseOffset,setIncreaseOffset] = useState(0);
+   
+    const updatePostsList = (config) => {
 
-    const updatePostsList = (config) => {        
+        setIncreaseOffset(0);
+
+        const tailURL = `posts?offset=0&limit=5`;
+        const headURL = 'https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr';
+
+        const userHasBeenClicked = Object.keys(clickedUser).length;
+
+        const url = (
+            clickedHashTag ? 
+                `${headURL}/hashtags/${clickedHashTag}/${tailURL}` : 
+                userHasBeenClicked ?
+                    `${headURL}/users/${clickedUser.id}/${tailURL}` :
+                    `${headURL}/${tailURL}`
+        );
         
-        Axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts?offset=0&limit=5', config)
+        Axios.get(url, config)
             .catch(errorHandler)
             .then(({ data }) => processPosts(data));
     }   
@@ -36,7 +53,11 @@ export const PostsProvider = (props) => {
                 processPosts,
                 errorHandler,
                 increaseOffset,
-                setIncreaseOffset
+                setIncreaseOffset,
+                clickedUser,
+                setClickedUser,
+                clickedHashTag,
+                setClickedHashtag
             }}
         >
             {props.children}
