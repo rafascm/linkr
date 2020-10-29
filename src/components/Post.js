@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
@@ -6,11 +6,16 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import ReactHashtag from "react-hashtag";
 import PostsContext from '../contexts/PostsContext';
 import ReactTooltip from 'react-tooltip';
+import UserContext from '../contexts/UserContext';
 
 const Post = ({ post }) => {
 
     const history = useHistory();
-    const { setClickedUser, setClickedHashtag, setIncreaseOffset } = useContext(PostsContext);
+    const { setClickedUser, setClickedHashtag, updatePostsList } = useContext(PostsContext);
+
+    const { User } = useContext(UserContext);
+    const { token } = User;
+    const [config] = useState({ headers: { 'user-token': token } });
 
     const {
         user,
@@ -23,14 +28,20 @@ const Post = ({ post }) => {
     } = post;
 
     const hashtagClickedHandler = (tag) => {
-        setIncreaseOffset(0)
+        setClickedUser({});
+        setClickedHashtag('');
         setClickedHashtag(tag.substring(1));
+        updatePostsList(config);
+
         history.push(`/hashtag/${tag.substring(1)}`);
     }
 
     const userClickedHandler = (user) => {
-        setIncreaseOffset(0)
+        setClickedHashtag('');
+        setClickedUser({});
         setClickedUser(user);
+        updatePostsList(config);
+
         history.push(`/user/${user.id}`)
     }
 

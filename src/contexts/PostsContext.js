@@ -37,7 +37,7 @@ export const PostsProvider = (props) => {
 
     const processPosts = (data) => {
         !data.posts.length && alert('Nenhum post encontrado');
-        setPostsList([...data.posts]);        
+        setPostsList([...new Set([...data.posts])]);        
     }
 
     const errorHandler = () => {
