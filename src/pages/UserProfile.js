@@ -11,13 +11,13 @@ const UserProfile = () => {
 
     return (
         <>
+            <Header />
+            <Trending />
             <Container>
-                <Header />
                 <h2>{clickedUser.username}'s posts</h2>
                 <Content>                    
                     <PostsList />
                 </Content>
-                <Trending />
             </Container>
         </>
     );

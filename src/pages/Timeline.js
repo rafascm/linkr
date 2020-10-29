@@ -5,20 +5,21 @@ import Header from '../components/Header';
 import Publish from '../components/Publish';
 import Trending from '../components/Trending';
 import PostsList from '../components/PostsList';
+import { motion } from 'framer-motion';
 
 const Timeline = () => {
-    
+
     return (
         <>
             <Header />
+            <Trending />
             <Container>
                 <h2>timeline</h2>
                 <Content>
                     <Publish />
                     <PostsList />
-                </Content>    
+                </Content>
             </Container>
-            <Trending />
         </>
     );
 }

@@ -10,13 +10,13 @@ const HashtagPosts = () => {
     const { clickedHashTag } = useContext(PostsContext);
     return (
         <>
-            <Container>
-                <Header />
+            <Header />
+            <Trending />
+            <Container>  
                 <h2># {clickedHashTag}</h2>
                 <Content>                    
                     <PostsList />
                 </Content>
-                <Trending />
             </Container>
         </>
     );
