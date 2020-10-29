@@ -5,6 +5,7 @@ import { colors } from '../styles/styles';
 import { IoIosHeartEmpty } from "react-icons/io";
 import ReactHashtag from "react-hashtag";
 import PostsContext from '../contexts/PostsContext';
+import ReactTooltip from 'react-tooltip';
 
 const Post = ({ post }) => {
 
