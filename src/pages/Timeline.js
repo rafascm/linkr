@@ -5,20 +5,27 @@ import Header from '../components/Header';
 import Publish from '../components/Publish';
 import Trending from '../components/Trending';
 import PostsList from '../components/PostsList';
+import { motion } from 'framer-motion';
 
 const Timeline = () => {
-    
+
     return (
         <>
             <Header />
-            <Container>
-                <h2>timeline</h2>
-                <Content>
-                    <Publish />                    
-                    <PostsList />                    
-                </Content>    
-            </Container>
-            <Trending />
+            <AnimatedContainer
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
+                <Trending />
+                <Container>
+                    <h2>timeline</h2>
+                    <Content>
+                        <Publish />
+                        <PostsList />
+                    </Content>
+                </Container>
+            </AnimatedContainer>
         </>
     );
 }
@@ -52,4 +59,9 @@ const Content = styled.div`
     & > * + * {
         margin-top: 2rem;
     }
+`;
+
+
+const AnimatedContainer = styled(motion.div)`
+    width: 100%;
 `;

@@ -8,6 +8,9 @@ import SignIn from '../pages/SignIn';
 import TimeLine from '../pages/TimeLine';
 import UserProfile from '../pages/UserProfile';
 import HashtagPosts from '../pages/HashtagPosts';
+import { AnimatePresence } from 'framer-motion';
+import Header from './Header';
+import Trending from './Trending';
 
 const App = () => {
     return (
@@ -15,13 +18,15 @@ const App = () => {
             <PostsProvider>
                 <GlobalStyle />
                 <Router>
-                    <Switch>
-                        <Route path='/' exact component={SignIn} />
-                        <Route path='/sign-up' component={SignUp} />
-                        <Route path='/timeline' component={TimeLine} />
-                        <Route path='/user' component={UserProfile} />
-                        <Route path='/hashtag' component={HashtagPosts} />  
-                    </Switch>
+                    <AnimatePresence>
+                        <Switch>
+                            <Route path='/' exact><SignIn /></Route>
+                            <Route path='/sign-up' ><SignUp /></Route>
+                            <Route path='/timeline'><TimeLine /></Route>
+                            <Route path='/user'><UserProfile /></Route>
+                            <Route path='/hashtag'><HashtagPosts /></Route>
+                        </Switch>
+                    </AnimatePresence>
                 </Router>
             </PostsProvider>
         </UserProvider>

@@ -5,20 +5,27 @@ import Trending from '../components/Trending';
 import PostsContext from '../contexts/PostsContext';
 import { colors } from '../styles/styles';
 import PostsList from '../components/PostsList';
+import { motion } from 'framer-motion';
 
 const UserProfile = () => {
     const { clickedUser } = useContext(PostsContext);
 
     return (
         <>
-            <Container>
-                <Header />
-                <h2>{clickedUser.username}'s posts</h2>
-                <Content>                    
-                    <PostsList />
-                </Content>
+            <Header />
+            <AnimatedContainer
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
                 <Trending />
-            </Container>
+                <Container>
+                    <h2>{clickedUser.username}'s posts</h2>
+                    <Content>
+                        <PostsList />
+                    </Content>
+                </Container>
+            </AnimatedContainer>
         </>
     );
 }
@@ -46,4 +53,8 @@ const Content = styled.div`
     & > * + * {
         margin-top: 2rem;
     }
+`;
+
+const AnimatedContainer = styled(motion.div)`
+    width: 100%;
 `;
