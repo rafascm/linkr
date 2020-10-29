@@ -5,6 +5,7 @@ import UserContext from '../contexts/UserContext';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import PostsContext from '../contexts/PostsContext';
+import { motion } from 'framer-motion';
 
 const Publish = () => {
     const { User } = useContext(UserContext);
@@ -46,6 +47,11 @@ const Publish = () => {
     }
 
     return (
+        <AnimatedContainer
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
         <Container>
             <img src={user.avatar} />
             <InputContainer onSubmit={(e) => publishClickHandler(e)}>
@@ -73,10 +79,15 @@ const Publish = () => {
                 />
             </InputContainer>
         </Container>
+        </AnimatedContainer>
     );
 }
 
 export default Publish;
+
+const AnimatedContainer = styled(motion.div)`
+    width: 100%
+`;
 
 const Container = styled.div`
     background-color: ${colors.secondaryText};

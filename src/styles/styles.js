@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
 export default GlobalStyle;
 
 export const FormsContainer = styled.form`
-    width: 34%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;

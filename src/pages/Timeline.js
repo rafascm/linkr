@@ -12,14 +12,20 @@ const Timeline = () => {
     return (
         <>
             <Header />
-            <Trending />
-            <Container>
-                <h2>timeline</h2>
-                <Content>
-                    <Publish />
-                    <PostsList />
-                </Content>
-            </Container>
+            <AnimatedContainer
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
+                <Trending />
+                <Container>
+                    <h2>timeline</h2>
+                    <Content>
+                        <Publish />
+                        <PostsList />
+                    </Content>
+                </Container>
+            </AnimatedContainer>
         </>
     );
 }
@@ -53,4 +59,9 @@ const Content = styled.div`
     & > * + * {
         margin-top: 2rem;
     }
+`;
+
+
+const AnimatedContainer = styled(motion.div)`
+    width: 100%;
 `;

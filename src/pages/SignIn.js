@@ -5,7 +5,7 @@ import { FormsContainer } from '../styles/styles';
 import TitleComponent from '../components/Title';
 import Axios from 'axios';
 import UserContext from '../contexts/UserContext';
-
+import { motion } from 'framer-motion';
 const SignIn = () => {
 
     const history = useHistory();
@@ -57,7 +57,12 @@ const SignIn = () => {
     return (
         <Container>
             <TitleComponent />
-            <FormsContainer onSubmit={signInClickHandler}>
+            <AnimatedContainer
+                initial={{opacity:0}}
+                animate={{opacity:1}}
+                exit={{opacity:0}}
+            >
+                <FormsContainer onSubmit={signInClickHandler}>
                 
                     <input type='email' placeholder='e-mail' 
                     onChange={e => setEmail(e.target.value)} 
@@ -71,7 +76,7 @@ const SignIn = () => {
 
                     <Link to='/sign-up'>Click Here To Sign Up</Link>                
 
-            </FormsContainer>                          
+            </FormsContainer></AnimatedContainer>                          
         </Container>
     );
 }
@@ -84,3 +89,6 @@ const Container = styled.div`
     display: flex;
 `;
 
+const AnimatedContainer = styled(motion.div)`
+    width: 34%;
+`;

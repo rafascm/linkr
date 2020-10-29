@@ -5,6 +5,7 @@ import UserContext from '../contexts/UserContext';
 import { FormsContainer } from '../styles/styles';
 import { Link, useHistory } from 'react-router-dom';
 import Axios from 'axios';
+import { motion } from 'framer-motion';
 
 const SignUp = () => {   
 
@@ -46,6 +47,11 @@ const SignUp = () => {
     return (
         <Container>
             <Title />
+            <AnimatedContainer
+                initial={{opacity:0}}
+                animate={{opacity:1}}
+                exit={{opacity:0}}
+            >
             <FormsContainer onSubmit={(e) => signUpClickHandler(e)}>
                 <input
                     type='email'
@@ -73,6 +79,7 @@ const SignUp = () => {
                 <input type='submit' value='Sign Up' clicked={hasBeenClicked.toString()}/>
                 <Link to='/'>Switch back to log in</Link>
             </FormsContainer>
+            </AnimatedContainer>
         </Container>
     );
 }
@@ -85,3 +92,6 @@ const Container = styled.div`
     display: flex;
 `;
 
+const AnimatedContainer = styled(motion.div)`
+    width: 34%;
+`;
