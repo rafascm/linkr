@@ -39,7 +39,7 @@ const PostsList = () => {
            setPostsList( prevPosts => [...prevPosts,...data.posts]);
         });
    
-}
+    }
 
     return (
         <>            

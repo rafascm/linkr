@@ -3,6 +3,7 @@ import ReactHashtag from "react-hashtag";
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/styles';
+import { FormsContainer } from '../styles/styles';
 import UserContext from '../contexts/UserContext';
 import PostsContext from '../contexts/PostsContext';
 
@@ -13,19 +14,44 @@ const Trending = () => {
     const { User, updateHashtagList, hashtagList } = useContext(UserContext);
     const { token } = User;
     const [config] = useState({ headers: { 'user-token': token } });
+    const [hashtagName, setHashtagName] = useState('');
+
     
     const { setClickedHashtag } = useContext(PostsContext);
     
     useEffect(() => updateHashtagList(config), []);
 
-    const HashtagHandler = (tag) => {
-        setClickedHashtag(tag.substring(1));
-        history.push(`/hashtag/${tag.substring(1)}`);
-    }
+    const hashtagHandler = (tag) => {
+        setClickedHashtag(tag);
+        history.push(`/hashtag/${tag}`);        
+    };
+
+    const searchHashtagHandler = (e) =>{
+        e.preventDefault();        
+        let hashtag ='';
+        hashtag += e.target.value;
+        if(hashtag.charAt(0) === "#") hashtag = hashtag.substring(1);
+        hashtag = hashtag.trim();
+
+        setHashtagName(hashtag);
+
+        console.log(hashtag);
+    };
 
     return (
         <Container>
             <div><h2>trending</h2></div>
+
+            <FormsContainer onSubmit={() => hashtagHandler(hashtagName)}>
+                <input 
+                    type='text' 
+                    name='hashtag' 
+                    value={hashtagName}
+                    placeholder='Digite a hashtag sem #'
+                    onChange={(e) => searchHashtagHandler(e)}
+                />
+            </FormsContainer>
+
             <section>
                 {hashtagList && hashtagList.map(hashtag =>
                     <Hashtag key={hashtag.id}>
