@@ -110,17 +110,15 @@ const Post = ({ post }) => {
 
       if (aux.length === 2) return `Voce e ${likeNames[0]} curtiram isso`;
 
-      newString = `Voce, ${likeNames[0]} e outra(s) ${
-        likeNames.length - 1
-      } pessoa(s) curtiram isso`;
+      newString = `Voce, ${likeNames[0]} e outra(s) ${likeNames.length - 1
+        } pessoa(s) curtiram isso`;
     } else {
       if (likeNames.length === 1) return `${likeNames[0]} curtiu isso`;
       if (likeNames.length === 2)
         return `${likeNames[0]} e ${likeNames[1]} curtiram isso`;
 
-      newString = `${likeNames[0]}, ${likeNames[1]} e outra(s) ${
-        likeNames.length - 2
-      } pessoa(s) curtiram isso`;
+      newString = `${likeNames[0]}, ${likeNames[1]} e outra(s) ${likeNames.length - 2
+        } pessoa(s) curtiram isso`;
     }
     return newString;
   };
@@ -132,8 +130,8 @@ const Post = ({ post }) => {
         {isLiked ? (
           <HeartIconFull onClick={likePost} />
         ) : (
-          <HeartIcon onClick={likePost} />
-        )}
+            <HeartIcon onClick={likePost} />
+          )}
         <p data-tip={parseTooltipText(likedArray, isLiked)}>
           {likedArray.length} likes
         </p>
@@ -299,23 +297,17 @@ const PreviewContainer = styled.a`
       color: ${colors.mainText};
       text-overflow: ellipsis;
     }
-
-    @media (max-width: 1024px) {
-        & {
-           
-        }
-
+  }
+  @media (max-width: 1024px) {
         & > img {
             display:none;
         }
-
         p {
             overflow: hidden;
             text-overflow: ellipsis;
             max-height: 2rem
         }
     }
-  }
 `;
 
 const Hashtag = styled.span`
