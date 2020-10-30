@@ -9,8 +9,6 @@ import TimeLine from "../pages/TimeLine";
 import UserProfile from "../pages/UserProfile";
 import HashtagPosts from "../pages/HashtagPosts";
 import { AnimatePresence } from "framer-motion";
-import Header from "./Header";
-import Trending from "./Trending";
 
 const App = () => {
   return (
