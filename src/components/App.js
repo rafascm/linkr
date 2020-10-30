@@ -5,7 +5,7 @@ import { UserProvider } from "../contexts/UserContext";
 import { PostsProvider } from "../contexts/PostsContext";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
-import TimeLine from "../pages/TimeLine";
+import TimeLine from "../pages/Timeline";
 import UserProfile from "../pages/UserProfile";
 import HashtagPosts from "../pages/HashtagPosts";
 import { AnimatePresence } from "framer-motion";
