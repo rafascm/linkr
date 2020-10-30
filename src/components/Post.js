@@ -11,9 +11,13 @@ import UserContext from "../contexts/UserContext";
 
 const Post = ({ post }) => {
   const history = useHistory();
-  const { setClickedUser, setClickedHashtag, updatePostsList } = useContext(
-    PostsContext
-  );
+  const {
+    setClickedUser,
+    setClickedHashtag,
+    updatePostsList,
+    setClickedMyLikes,
+    clickedMyLikes,
+  } = useContext(PostsContext);
 
   const { User } = useContext(UserContext);
   const { token } = User;
@@ -28,11 +32,16 @@ const Post = ({ post }) => {
     linkImage,
   } = post;
 
-  const initialState = likes.some((like) => like['user.id'] === User.user.id);
+  const initialState = likes.some((like) => {
+    return clickedMyLikes
+      ? like.id === User.user.id
+      : like["user.id"] === User.user.id;
+  });
   const [isLiked, setIsLiked] = useState(initialState);
   const [likedArray, setLikedArray] = useState(likes);
 
   const hashtagClickedHandler = (tag) => {
+    setClickedMyLikes(false);
     setClickedUser({});
     setClickedHashtag("");
     setClickedHashtag(tag.substring(1));
@@ -42,6 +51,7 @@ const Post = ({ post }) => {
   };
 
   const userClickedHandler = (user) => {
+    setClickedMyLikes(false);
     setClickedHashtag("");
     setClickedUser({});
     setClickedUser(user);
@@ -62,6 +72,7 @@ const Post = ({ post }) => {
         .then(({ data }) => {
           setLikedArray([...data.post.likes]);
           setIsLiked(!isLiked);
+          updatePostsList(config);
         })
         .catch((error) => console.error(error));
     } else {
@@ -75,6 +86,7 @@ const Post = ({ post }) => {
         .then(({ data }) => {
           setLikedArray([...data.post.likes]);
           setIsLiked(!isLiked);
+          updatePostsList(config);
         })
         .catch((error) => console.error(error));
     }
@@ -82,18 +94,33 @@ const Post = ({ post }) => {
 
   const parseTooltipText = (likedArray, isLiked) => {
     let newString = "";
+
     if (likedArray.length === 0) return "Sem curtidas";
-    const likeNames = likedArray.map((like) => like["user.username"]);
+
+    let likeNames = likedArray.map((like) => {
+      return clickedMyLikes ? like.username : like["user.username"];
+    });
+
     if (isLiked) {
       if (likeNames.length === 1) return "Voce curtiu isso";
-      newString = `Voce, ${likeNames[0]} e outras ${
-        likeNames.length - 2
-      } pessoas `;
+
+      let aux = likeNames;
+
+      likeNames = likeNames.filter((name) => name !== User.user.username);
+
+      if (aux.length === 2) return `Voce e ${likeNames[0]} curtiram isso`;
+
+      newString = `Voce, ${likeNames[0]} e outra(s) ${
+        likeNames.length - 1
+      } pessoa(s) curtiram isso`;
     } else {
       if (likeNames.length === 1) return `${likeNames[0]} curtiu isso`;
-      newString = `${likeNames[0]}, ${likeNames[1]} e outras ${
+      if (likeNames.length === 2)
+        return `${likeNames[0]} e ${likeNames[1]} curtiram isso`;
+
+      newString = `${likeNames[0]}, ${likeNames[1]} e outra(s) ${
         likeNames.length - 2
-      } pessoas`;
+      } pessoa(s) curtiram isso`;
     }
     return newString;
   };

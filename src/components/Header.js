@@ -11,9 +11,12 @@ const Header = () => {
   const { user, token } = User;
   const [config] = useState({ headers: { "user-token": token } });
 
-  const { updatePostsList, setClickedUser, setClickedHashtag } = useContext(
-    PostsContext
-  );
+  const {
+    updatePostsList,
+    setClickedUser,
+    setClickedHashtag,
+    setClickedMyLikes,
+  } = useContext(PostsContext);
 
   const [hasClicked, setHasClicked] = useState(false);
 
@@ -26,9 +29,24 @@ const Header = () => {
   const logoClickHandler = () => {
     setClickedHashtag("");
     setClickedUser({});
+    setClickedMyLikes(false);
 
     updatePostsList(config);
     history.push("/timeline");
+  };
+
+  const userClickedHandler = (user) => {
+    setClickedMyLikes(false);
+    setClickedHashtag("");
+    setClickedUser({});
+    setClickedUser(user);
+    updatePostsList(config);
+
+    history.push(`/user/${user.id}`);
+  };
+
+  const myLikesHandler = () => {
+    setClickedMyLikes(true);
   };
 
   return (
@@ -40,10 +58,10 @@ const Header = () => {
         </span>
         <img src={user.avatar} onClick={() => dropMenu()} />
         <DropDownMenu clicked={hasClicked.toString()}>
-          <Link to="/my-posts">
+          <Link onClick={() => userClickedHandler(user)} to="/my-posts">
             <p>My posts</p>
           </Link>
-          <Link to="/my-likes">
+          <Link onClick={() => myLikesHandler()} to="/my-likes">
             <p>My likes</p>
           </Link>
           <Link to="/">
