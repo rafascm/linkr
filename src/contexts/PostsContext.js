@@ -17,7 +17,7 @@ export const PostsProvider = (props) => {
 
     const tailURL = `posts?offset=0&limit=5`;
     const headURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr";
-    const likedURL = "posts/liked";
+    const likedURL = "posts/liked?offset=0&limit=5";
 
     const userHasBeenClicked = Object.keys(clickedUser).length;
 
