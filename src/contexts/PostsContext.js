@@ -31,11 +31,13 @@ export const PostsProvider = (props) => {
         Axios.get(url, config)
             .catch(errorHandler)
             .then(({ data }) => processPosts(data));
-    }   
+    } 
+    
+    // console.log(postsList)
 
     const processPosts = (data) => {
         !data.posts.length && alert('Nenhum post encontrado');
-        setPostsList([...data.posts]);        
+        setPostsList([...new Set([...data.posts])]);        
     }
 
     const errorHandler = () => {
