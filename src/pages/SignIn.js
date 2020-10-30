@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const SignIn = () => {
   const history = useHistory();
 
-  const { setUser, isLogged, setIsLogged } = useContext(UserContext);
+  const { User, setUser, isLogged, setIsLogged } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +55,8 @@ const SignIn = () => {
       setHasBeenClicked(false);
     }
   };
+
+  console.log(User);
 
   return (
     <Container>

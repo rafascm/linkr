@@ -28,7 +28,7 @@ const Post = ({ post }) => {
     linkImage,
   } = post;
 
-  const initialState = likes.some((like) => like.userId === user.id);
+  const initialState = likes.some((like) => like['user.id'] === User.user.id);
   const [isLiked, setIsLiked] = useState(initialState);
   const [likedArray, setLikedArray] = useState(likes);
 
@@ -52,7 +52,7 @@ const Post = ({ post }) => {
 
   const likePost = () => {
     if (!isLiked) {
-      const likeObj = { id: User.id, username: User.username };
+      const likeObj = { id: User.user.id, username: User.user.username };
       axios
         .post(
           `https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`,
@@ -65,7 +65,7 @@ const Post = ({ post }) => {
         })
         .catch((error) => console.error(error));
     } else {
-      const likeObj = { id: User.id, username: User.username };
+      const likeObj = { id: User.user.id, username: User.user.username };
       axios
         .post(
           `https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`,
@@ -108,7 +108,7 @@ const Post = ({ post }) => {
           <HeartIcon onClick={likePost} />
         )}
         <p data-tip={parseTooltipText(likedArray, isLiked)}>
-          {likes.length} likes
+          {likedArray.length} likes
         </p>
         <ReactTooltip />
       </ImageContainer>
@@ -253,6 +253,7 @@ const PreviewContainer = styled.a`
 `;
 
 const Hashtag = styled.span`
+  cursor: pointer;
   color: ${colors.secondaryText};
   font-weight: bold;
 `;
