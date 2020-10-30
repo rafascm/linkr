@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/rafascm/linkr/issues"
   },
-  "homepage": "https://github.com/rafascm/linkr#readme"
+  "homepage": "https://github.com/rafascm/linkr#readme",
+  "devDependencies": {
+    "prettier": "2.1.2"
+  }
 }

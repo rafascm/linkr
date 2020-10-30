@@ -1,78 +1,85 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroller';
-import styled from 'styled-components';
-import UserContext from '../contexts/UserContext';
-import PostsContext from '../contexts/PostsContext';
-import Post from './Post.js';
+import React, { useContext, useState, useEffect } from "react";
+import Axios from "axios";
+import InfiniteScroll from "react-infinite-scroller";
+import styled from "styled-components";
+import UserContext from "../contexts/UserContext";
+import PostsContext from "../contexts/PostsContext";
+import Post from "./Post.js";
 
 const PostsList = () => {
-    const { postsList, setPostsList, updatePostsList, increaseOffset, setIncreaseOffset, clickedUser, clickedHashTag } = useContext(PostsContext);
+  const {
+    postsList,
+    setPostsList,
+    updatePostsList,
+    increaseOffset,
+    setIncreaseOffset,
+    clickedUser,
+    clickedHashTag,
+  } = useContext(PostsContext);
 
-    const { User } = useContext(UserContext);
-    const { token } = User;
-    const [config] = useState({ headers: { 'user-token': token } });
-    const [hasMore, setHasMore] = useState(true);
+  const { User } = useContext(UserContext);
+  const { token } = User;
+  const [config] = useState({ headers: { "user-token": token } });
+  const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => updatePostsList(config), []);
 
-    useEffect(() => updatePostsList(config), []);
+  const loadFunc = () => {
+    const tailURL = `posts?offset=${increaseOffset}&limit=5`;
+    const headURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr";
 
-    const loadFunc = () => {
+    const userHasBeenClicked = Object.keys(clickedUser).length;
 
-        const tailURL = `posts?offset=${increaseOffset}&limit=5`;
-        const headURL = 'https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr';
+    const url = clickedHashTag
+      ? `${headURL}/hashtags/${clickedHashTag}/${tailURL}`
+      : userHasBeenClicked
+      ? `${headURL}/users/${clickedUser.id}/${tailURL}`
+      : `${headURL}/${tailURL}`;
 
-        const userHasBeenClicked = Object.keys(clickedUser).length;
+    Axios.get(url, config).then(({ data }) => {
+      setIncreaseOffset(increaseOffset + 5);
+      if (!(data.posts.length > 0)) setHasMore(false);
+      setPostsList([...new Set([...postsList, ...data.posts])]);
+    });
+  };
 
-        const url = (
-            clickedHashTag ? 
-                `${headURL}/hashtags/${clickedHashTag}/${tailURL}` : 
-                userHasBeenClicked ?
-                    `${headURL}/users/${clickedUser.id}/${tailURL}` :
-                    `${headURL}/${tailURL}`
-        );
+  return (
+    <>
+      <StyledInfiniteScroll
+        loadMore={loadFunc}
+        hasMore={hasMore}
+        loader={
+          <LoadingContainer>
+            <Loading src="./media/loading.gif" />
+          </LoadingContainer>
+        }
+      >
+        {postsList.map((post) => (
+          <Post post={post} key={post.id} />
+        ))}
+      </StyledInfiniteScroll>
+    </>
+  );
+};
 
-        Axios.get(url,config)       
-       .then(({ data }) => {
-            setIncreaseOffset(increaseOffset + 5);
-           if( !(data.posts.length > 0) ) setHasMore(false);
-           setPostsList( [...new Set([...postsList,...data.posts])]);
-        });
-   
-    }
-
-    return (
-        <>
-            <StyledInfiniteScroll
-                loadMore={loadFunc}
-                hasMore={hasMore}
-                loader={<LoadingContainer ><Loading src="./media/loading.gif" /></LoadingContainer>}
-            >
-                {postsList.map(post => (<Post post={post} key={post.id} />))}
-            </StyledInfiniteScroll>
-        </>
-    );
-}
-
-// 
+//
 
 export default PostsList;
 
-
 const LoadingContainer = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
 const Loading = styled.img`
-    width: 10rem;
-    height: auto;
+  width: 10rem;
+  height: auto;
 `;
 
 const StyledInfiniteScroll = styled(InfiniteScroll)`
-    & > * + * {
-        margin-top: 2rem;
-    }
+  & > * + * {
+    margin-top: 2rem;
+  }
 `;

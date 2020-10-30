@@ -33,7 +33,7 @@ export const PostsProvider = (props) => {
             .then(({ data }) => processPosts(data));
     } 
     
-    console.log(postsList)
+    // console.log(postsList)
 
     const processPosts = (data) => {
         !data.posts.length && alert('Nenhum post encontrado');
