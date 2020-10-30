@@ -16,13 +16,17 @@ The following tools and frameworks were used in the construction of the project:
 <p align="center">
     <img src="https://img.shields.io/badge/react-app%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
     <img src="https://img.shields.io/badge/react_router%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
-    <img src="https://img.shields.io/badge/node.js%20-%2343853D.svg?&style=for-the-badge&logo=node.js&logoColor=white"/>
-    <img src="https://img.shields.io/badge/webpack%20-%238DD6F9.svg?&style=for-the-badge&logo=webpack&logoColor=black" />
+    <img src='https://img.shields.io/badge/react-icon%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB'>
+    <img src='https://img.shields.io/badge/react-hashtag%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB'>
+    <img src="https://img.shields.io/badge/react-infinite_scroller%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+    <img src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&logo=styled-components&logoColor=%2361DAFB'>
+    <img src="https://img.shields.io/badge/framer_motion%20-%2320232a.svg?&style=for-the-badge&logo=framer-motion&logoColor=%2361DAFB"/>
     <img src='https://img.shields.io/badge/axios%20-%2320232a.svg?&style=for-the-badge&logo=axios&logoColor=%2361DAFB'>
     <img src='https://img.shields.io/badge/babel%20-%2320232a.svg?&style=for-the-badge&logo=babel&logoColor=%2361DAFB'>
-    <img src='https://img.shields.io/badge/react-icon%20-%2320232a.svg?&style=for-the-badge&logo=react-icon&logoColor=%2361DAFB'>
-    <img src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&logo=styled-components&logoColor=%2361DAFB'>
     <img src="https://img.shields.io/badge/figma%20-%23F24E1E.svg?&style=for-the-badge&logo=figma&logoColor=white"/>
+    <img src="https://img.shields.io/badge/node.js%20-%2343853D.svg?&style=for-the-badge&logo=node.js&logoColor=white"/>
+    <img src="https://img.shields.io/badge/webpack%20-%238DD6F9.svg?&style=for-the-badge&logo=webpack&logoColor=black" />
+    
 </p>
 
 
