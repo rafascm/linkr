@@ -17,7 +17,7 @@ const App = () => {
     <UserProvider>
       <PostsProvider>
         <GlobalStyle />
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <AnimatePresence>
             <Switch>
               <Route path="/" exact>

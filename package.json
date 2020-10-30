@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/rafascm/linkr/issues"
   },
-  "homepage": "https://rafascm.github.io/linkr",
+  "homepage": "https://rafascm.github.io/linkr/",
   "devDependencies": {
     "gh-pages": "^3.1.0",
     "prettier": "2.1.2"
