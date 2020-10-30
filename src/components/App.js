@@ -5,9 +5,11 @@ import { UserProvider } from "../contexts/UserContext";
 import { PostsProvider } from "../contexts/PostsContext";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
-import TimeLine from "../pages/TimeLine";
+import Timeline from "../pages/Timeline";
 import UserProfile from "../pages/UserProfile";
 import HashtagPosts from "../pages/HashtagPosts";
+import MyLikes from "../pages/MyLikes";
+import MyPosts from "../pages/MyPosts";
 import { AnimatePresence } from "framer-motion";
 
 const App = () => {
@@ -25,13 +27,19 @@ const App = () => {
                 <SignUp />
               </Route>
               <Route path="/timeline">
-                <TimeLine />
+                <Timeline />
               </Route>
               <Route path="/user">
                 <UserProfile />
               </Route>
               <Route path="/hashtag">
                 <HashtagPosts />
+              </Route>
+              <Route path="/my-likes">
+                <MyLikes />
+              </Route>
+              <Route path="/my-posts">
+                <MyPosts />
               </Route>
             </Switch>
           </AnimatePresence>

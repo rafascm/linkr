@@ -56,8 +56,6 @@ const SignIn = () => {
     }
   };
 
-  console.log(User);
-
   return (
     <Container>
       <TitleComponent />

@@ -15,6 +15,7 @@ const PostsList = () => {
     setIncreaseOffset,
     clickedUser,
     clickedHashTag,
+    clickedMyLikes,
   } = useContext(PostsContext);
 
   const { User } = useContext(UserContext);
@@ -22,11 +23,12 @@ const PostsList = () => {
   const [config] = useState({ headers: { "user-token": token } });
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => updatePostsList(config), [clickedUser,clickedHashTag]);
+  useEffect(() => updatePostsList(config), [clickedUser, clickedHashTag]);
 
   const loadFunc = () => {
     const tailURL = `posts?offset=${increaseOffset}&limit=5`;
     const headURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr";
+    const likedURL = "posts/liked";
 
     const userHasBeenClicked = Object.keys(clickedUser).length;
 
@@ -34,6 +36,8 @@ const PostsList = () => {
       ? `${headURL}/hashtags/${clickedHashTag}/${tailURL}`
       : userHasBeenClicked
       ? `${headURL}/users/${clickedUser.id}/${tailURL}`
+      : clickedMyLikes
+      ? `${headURL}/${likedURL}?offset=${increaseOffset}&limit=5`
       : `${headURL}/${tailURL}`;
 
     Axios.get(url, config).then(({ data }) => {
@@ -45,17 +49,17 @@ const PostsList = () => {
 
   return (
     <>
-      <StyledInfiniteScroll        
+      <StyledInfiniteScroll
         loadMore={loadFunc}
         hasMore={hasMore}
         loader={
-          <LoadingContainer key={Math.floor(Math.random() *1000000)}>
+          <LoadingContainer key={Math.floor(Math.random() * 1000000)}>
             <Loading src="/media/loading.gif" />
           </LoadingContainer>
         }
       >
         {postsList.map((post) => (
-          <Post post={post} key={Math.floor(Math.random() *1000000)} />
+          <Post post={post} key={Math.floor(Math.random() * 1000000)} />
         ))}
       </StyledInfiniteScroll>
     </>
