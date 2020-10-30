@@ -191,20 +191,33 @@ const ImageContainer = styled.div`
     margin-top: 0.5rem;
   }
 
-  img {
-    border-radius: 50%;
-    width: 4rem;
-    height: 4rem;
-  }
+    img {
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+    }
+    
+    p {
+        color: ${colors.secondaryText};
+    }
 
-  p {
-    color: ${colors.secondaryText};
-  }
+    @media (max-width: 1024px) {
+        img {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
 `;
 
 const HeartIcon = styled(IoIosHeartEmpty)`
-  color: ${colors.secondaryText};
-  font-size: 2rem;
+    color: ${colors.secondaryText};
+    font-size: 2rem;
+
+    @media (max-width: 1024px) {
+        & {
+            font-size: .9rem;
+        }
+    }
 `;
 
 const HeartIconFull = styled(IoIosHeart)`
@@ -227,10 +240,20 @@ const InfoContainer = styled.div`
     font-size: 1.2rem;
   }
 
-  & > h3 {
-    font-size: 1rem;
-    color: ${colors.mainText};
-  }
+    & > h3 {
+        font-size: 1rem;
+        color: ${colors.mainText};
+    }
+
+    @media (max-width: 1024px) {
+        & > h2 {
+            margin: .5rem 0;
+            font-size: 1rem;
+        }
+        & > h3 {
+            font-size: 1rem;
+        }
+    }
 `;
 
 const PreviewContainer = styled.a`
@@ -275,6 +298,22 @@ const PreviewContainer = styled.a`
       font-size: 0.7rem;
       color: ${colors.mainText};
       text-overflow: ellipsis;
+    }
+
+    @media (max-width: 1024px) {
+        & {
+           
+        }
+
+        & > img {
+            display:none;
+        }
+
+        p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 2rem
+        }
     }
   }
 `;

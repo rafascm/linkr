@@ -8,64 +8,64 @@ import UserContext from "../contexts/UserContext";
 import PostsContext from "../contexts/PostsContext";
 
 const Trending = () => {
-  const history = useHistory();
+    const history = useHistory();
 
-  const { User, updateHashtagList, hashtagList } = useContext(UserContext);
-  const { token } = User;
-  const [config] = useState({ headers: { "user-token": token } });
-  const [hashtagName, setHashtagName] = useState("");
+    const { User, updateHashtagList, hashtagList } = useContext(UserContext);
+    const { token } = User;
+    const [config] = useState({ headers: { "user-token": token } });
+    const [hashtagName, setHashtagName] = useState("");
 
-  const { setClickedHashtag, setClickedUser, updatePostsList } = useContext(
-    PostsContext
-  );
+    const { setClickedHashtag, setClickedUser, updatePostsList } = useContext(
+        PostsContext
+    );
 
-  useEffect(() => updateHashtagList(config), []);
+    useEffect(() => updateHashtagList(config), []);
 
-  const hashtagHandler = (tag, e) => {
-    e && e.preventDefault();
-    if (tag.charAt(0) === "#") tag = tag.substring(1);
-    setClickedHashtag(tag);
-    updatePostsList(config);
-    history.push(`/hashtag/${tag}`);
-    setHashtagName("");
-  };
+    const hashtagHandler = (tag, e) => {
+        e && e.preventDefault();
+        if (tag.charAt(0) === "#") tag = tag.substring(1);
+        setClickedHashtag(tag);
+        updatePostsList(config);
+        history.push(`/hashtag/${tag}`);
+        setHashtagName("");
+    };
 
-  const searchHashtagHandler = (e) => {
-    let hashtag = "";
-    hashtag += e.target.value;
-    if (hashtag.charAt(0) === "#") hashtag = hashtag.substring(1);
-    hashtag = hashtag.trim();
-    setHashtagName(hashtag);
-  };
+    const searchHashtagHandler = (e) => {
+        let hashtag = "";
+        hashtag += e.target.value;
+        if (hashtag.charAt(0) === "#") hashtag = hashtag.substring(1);
+        hashtag = hashtag.trim();
+        setHashtagName(hashtag);
+    };
 
-  return (
-    <Container>
-      <div>
-        <h2>trending</h2>
-      </div>
+    return (
+        <Container>
+            <div>
+                <h2>trending</h2>
+            </div>
 
-      <FormsContainer onSubmit={(e) => hashtagHandler(hashtagName, e)}>
-        <input
-          type="text"
-          name="hashtag"
-          value={hashtagName}
-          placeholder="Digite a hashtag sem #"
-          onChange={(e) => searchHashtagHandler(e)}
-        />
-      </FormsContainer>
+            <FormsContainer onSubmit={(e) => hashtagHandler(hashtagName, e)}>
+                <input
+                    type="text"
+                    name="hashtag"
+                    value={hashtagName}
+                    placeholder="Digite a hashtag sem #"
+                    onChange={(e) => searchHashtagHandler(e)}
+                />
+            </FormsContainer>
 
-      <section>
-        {hashtagList &&
-          hashtagList.map((hashtag) => (
-            <Hashtag key={hashtag.id}>
-              <ReactHashtag onHashtagClick={(val) => hashtagHandler(val)}>
-                {`#${hashtag.name}`}
-              </ReactHashtag>
-            </Hashtag>
-          ))}
-      </section>
-    </Container>
-  );
+            <section>
+                {hashtagList &&
+                    hashtagList.map((hashtag) => (
+                        <Hashtag key={hashtag.id}>
+                            <ReactHashtag onHashtagClick={(val) => hashtagHandler(val)}>
+                                {`#${hashtag.name}`}
+                            </ReactHashtag>
+                        </Hashtag>
+                    ))}
+            </section>
+        </Container>
+    );
 };
 
 export default Trending;
@@ -112,6 +112,10 @@ const Container = styled.aside`
       color: ${colors.secondaryText};
       padding-left: 1.5rem;
       margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 1024px) {
+        display: none;
     }
   }
 `;

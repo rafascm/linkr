@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
     #root {
         width: 100vw;
     }
+
+    @media (max-width: 1024px) {
+        
+    }
 `;
 
 export default GlobalStyle;
@@ -68,12 +72,18 @@ export const FormsContainer = styled.form`
       font-family: "Oswald", sans-serif;
       font-size: 1.3rem;
       pointer-events: ${({ clicked }) =>
-        clicked === "true" ? "none" : "auto"};
+      clicked === "true" ? "none" : "auto"};
     }
-
     &::placeholder {
       font-family: "Oswald", sans-serif;
       font-size: 1.3rem;
     }
+
+    @media (max-width: 1024px) {
+        & {
+            padding: 1.5rem 0;
+        }
+    }
   }
 `;
+

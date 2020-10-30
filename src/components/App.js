@@ -17,7 +17,7 @@ const App = () => {
     <UserProvider>
       <PostsProvider>
         <GlobalStyle />
-        <Router>
+        <Router basename="/linkr">
           <AnimatePresence>
             <Switch>
               <Route path="/" exact>
