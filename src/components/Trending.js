@@ -22,7 +22,7 @@ const Trending = () => {
   useEffect(() => updateHashtagList(config), []);
 
   const hashtagHandler = (tag, e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     if (tag.charAt(0) === "#") tag = tag.substring(1);
     setClickedHashtag(tag);
     updatePostsList(config);
@@ -31,15 +31,11 @@ const Trending = () => {
   };
 
   const searchHashtagHandler = (e) => {
-    e.preventDefault();
     let hashtag = "";
     hashtag += e.target.value;
     if (hashtag.charAt(0) === "#") hashtag = hashtag.substring(1);
     hashtag = hashtag.trim();
-
     setHashtagName(hashtag);
-
-    console.log(hashtag);
   };
 
   return (

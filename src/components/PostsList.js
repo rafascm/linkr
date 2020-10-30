@@ -22,7 +22,7 @@ const PostsList = () => {
   const [config] = useState({ headers: { "user-token": token } });
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => updatePostsList(config), []);
+  useEffect(() => updatePostsList(config), [clickedUser,clickedHashTag]);
 
   const loadFunc = () => {
     const tailURL = `posts?offset=${increaseOffset}&limit=5`;
@@ -49,13 +49,13 @@ const PostsList = () => {
         loadMore={loadFunc}
         hasMore={hasMore}
         loader={
-          <LoadingContainer key={Math.random()}>
+          <LoadingContainer key={Math.floor(Math.random() *1000000)}>
             <Loading src="/media/loading.gif" />
           </LoadingContainer>
         }
       >
         {postsList.map((post) => (
-          <Post post={post} key={post.id} />
+          <Post post={post} key={Math.floor(Math.random() *1000000)} />
         ))}
       </StyledInfiniteScroll>
     </>

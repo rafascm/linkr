@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/styles";
-import { IoIosHeartEmpty } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import ReactHashtag from "react-hashtag";
 import PostsContext from "../contexts/PostsContext";
 import ReactTooltip from "react-tooltip";
@@ -17,7 +18,6 @@ const Post = ({ post }) => {
   const { User } = useContext(UserContext);
   const { token } = User;
   const [config] = useState({ headers: { "user-token": token } });
-
   const {
     user,
     text,
@@ -27,6 +27,10 @@ const Post = ({ post }) => {
     linkDescription,
     linkImage,
   } = post;
+
+  const initialState = likes.some((like) => like.userId === user.id);
+  const [isLiked, setIsLiked] = useState(initialState);
+  const [likedArray, setLikedArray] = useState(likes);
 
   const hashtagClickedHandler = (tag) => {
     setClickedUser({});
@@ -46,22 +50,66 @@ const Post = ({ post }) => {
     history.push(`/user/${user.id}`);
   };
 
-  const setTip = () => {
-    if (likes.length > 2) {
-      return `${likes[0]["user.username"]}, ${
-        likes[1]["user.username"]
-      } e outras ${likes.length - 2} pessoas`;
+  const likePost = () => {
+    if (!isLiked) {
+      const likeObj = { id: User.id, username: User.username };
+      axios
+        .post(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/like`,
+          likeObj,
+          config
+        )
+        .then(({ data }) => {
+          setLikedArray([...data.post.likes]);
+          setIsLiked(!isLiked);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      const likeObj = { id: User.id, username: User.username };
+      axios
+        .post(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${post.id}/dislike`,
+          likeObj,
+          config
+        )
+        .then(({ data }) => {
+          setLikedArray([...data.post.likes]);
+          setIsLiked(!isLiked);
+        })
+        .catch((error) => console.error(error));
     }
+  };
 
-    return "meh";
+  const parseTooltipText = (likedArray, isLiked) => {
+    let newString = "";
+    if (likedArray.length === 0) return "Sem curtidas";
+    const likeNames = likedArray.map((like) => like["user.username"]);
+    if (isLiked) {
+      if (likeNames.length === 1) return "Voce curtiu isso";
+      newString = `Voce, ${likeNames[0]} e outras ${
+        likeNames.length - 2
+      } pessoas `;
+    } else {
+      if (likeNames.length === 1) return `${likeNames[0]} curtiu isso`;
+      newString = `${likeNames[0]}, ${likeNames[1]} e outras ${
+        likeNames.length - 2
+      } pessoas`;
+    }
+    return newString;
   };
 
   return (
     <Container>
       <ImageContainer>
         <img src={user.avatar} onClick={() => userClickedHandler(user)} />
-        <HeartIcon />
-        <p data-tip={setTip()}>{likes.length} likes</p>
+        {isLiked ? (
+          <HeartIconFull onClick={likePost} />
+        ) : (
+          <HeartIcon onClick={likePost} />
+        )}
+        <p data-tip={parseTooltipText(likedArray, isLiked)}>
+          {likes.length} likes
+        </p>
         <ReactTooltip />
       </ImageContainer>
       <TextContainer>
@@ -129,6 +177,11 @@ const ImageContainer = styled.div`
 
 const HeartIcon = styled(IoIosHeartEmpty)`
   color: ${colors.secondaryText};
+  font-size: 2rem;
+`;
+
+const HeartIconFull = styled(IoIosHeart)`
+  color: red;
   font-size: 2rem;
 `;
 
