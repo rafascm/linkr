@@ -114,10 +114,11 @@ const Container = styled.aside`
       margin-bottom: 0.5rem;
     }
 
-    @media (max-width: 1024px) {
+    
+  }
+  @media (max-width: 1024px) {
         display: none;
     }
-  }
 `;
 
 const Hashtag = styled.li`

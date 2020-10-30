@@ -58,13 +58,15 @@ const Content = styled.div`
   width: 70%;
   height: 100%;
 
-    & > * + * {
+  & > * + * {
         margin-top: 2rem;
     }
 
-    @media (max-width: 1024px) {
+  @media (max-width: 1024px) {
+    & {
         width: 100%;
     }
+  }
 `;
 
 const AnimatedContainer = styled(motion.div)`

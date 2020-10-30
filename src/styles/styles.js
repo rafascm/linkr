@@ -79,11 +79,12 @@ export const FormsContainer = styled.form`
       font-size: 1.3rem;
     }
 
-    @media (max-width: 1024px) {
+    
+  }
+  @media (max-width: 1024px) {
         & {
             padding: 1.5rem 0;
         }
     }
-  }
 `;
 
