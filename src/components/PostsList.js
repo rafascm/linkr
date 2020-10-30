@@ -45,12 +45,12 @@ const PostsList = () => {
 
   return (
     <>
-      <StyledInfiniteScroll
+      <StyledInfiniteScroll        
         loadMore={loadFunc}
         hasMore={hasMore}
         loader={
-          <LoadingContainer>
-            <Loading src="./media/loading.gif" />
+          <LoadingContainer key={Math.random()}>
+            <Loading src="/media/loading.gif" />
           </LoadingContainer>
         }
       >

@@ -21,12 +21,13 @@ const Trending = () => {
 
   useEffect(() => updateHashtagList(config), []);
 
-  const hashtagHandler = (tag) => {
+  const hashtagHandler = (tag, e) => {
+    e.preventDefault();
     if (tag.charAt(0) === "#") tag = tag.substring(1);
     setClickedHashtag(tag);
     updatePostsList(config);
     history.push(`/hashtag/${tag}`);
-    // setHashtagName('');
+    setHashtagName("");
   };
 
   const searchHashtagHandler = (e) => {
@@ -47,7 +48,7 @@ const Trending = () => {
         <h2>trending</h2>
       </div>
 
-      <FormsContainer onSubmit={() => hashtagHandler(hashtagName)}>
+      <FormsContainer onSubmit={(e) => hashtagHandler(hashtagName, e)}>
         <input
           type="text"
           name="hashtag"
