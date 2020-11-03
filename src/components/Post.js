@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/styles";
-import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
-import ReactHashtag from "react-hashtag";
 import PostsContext from "../contexts/PostsContext";
-import ReactTooltip from "react-tooltip";
 import UserContext from "../contexts/UserContext";
+import ImageContainer from './ImageContainer';
+import InfoContainer from './InfoContainer';
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -23,6 +22,7 @@ const Post = ({ post }) => {
   const { token } = User;
   const [config] = useState({ headers: { "user-token": token } });
   const {
+    id,
     user,
     text,
     likes,
@@ -39,16 +39,7 @@ const Post = ({ post }) => {
   });
   const [isLiked, setIsLiked] = useState(initialState);
   const [likedArray, setLikedArray] = useState(likes);
-
-  const hashtagClickedHandler = (tag) => {
-    setClickedMyLikes(false);
-    setClickedUser({});
-    setClickedHashtag("");
-    setClickedHashtag(tag.substring(1));
-    updatePostsList(config);
-
-    history.push(`/hashtag/${tag.substring(1)}`);
-  };
+  
 
   const userClickedHandler = (user) => {
     setClickedMyLikes(false);
@@ -125,33 +116,27 @@ const Post = ({ post }) => {
 
   return (
     <Container>
-      <ImageContainer>
-        <img src={user.avatar} onClick={() => userClickedHandler(user)} />
-        {isLiked ? (
-          <HeartIconFull onClick={likePost} />
-        ) : (
-            <HeartIcon onClick={likePost} />
-          )}
-        <p data-tip={parseTooltipText(likedArray, isLiked)}>
-          {likedArray.length} likes
-        </p>
-        <ReactTooltip />
-      </ImageContainer>
+      <ImageContainer
+        user={user}
+        likePost={likePost}
+        userClickedHandler={userClickedHandler}
+        isLiked={isLiked}
+        likedArray={likedArray}
+        parseTooltipText={parseTooltipText}
+      />
       <TextContainer>
-        <InfoContainer>
-          <h2 onClick={() => userClickedHandler(user)}>{user.username}</h2>
-          <h3>
-            <ReactHashtag
-              renderHashtag={(val) => (
-                <Hashtag key={val} onClick={() => hashtagClickedHandler(val)}>
-                  {val}
-                </Hashtag>
-              )}
-            >
-              {text}
-            </ReactHashtag>
-          </h3>
-        </InfoContainer>
+        <InfoContainer
+          id={id}
+          User={User}
+          user={user}
+          userClickedHandler={userClickedHandler}
+          text={text}
+          setClickedMyLikes={setClickedMyLikes}
+          setClickedUser={setClickedUser}
+          setClickedHashtag={setClickedHashtag}
+          updatePostsList={updatePostsList}
+          config={config}
+        />
         <PreviewContainer href={link} target="_blank">
           <div>
             <h1>{linkTitle}</h1>
@@ -179,79 +164,9 @@ const Container = styled.div`
     margin-bottom: 3rem;
   }
 `;
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 1rem;
-
-  & > * + * {
-    margin-top: 0.5rem;
-  }
-
-    img {
-        border-radius: 50%;
-        width: 4rem;
-        height: 4rem;
-    }
-    
-    p {
-        color: ${colors.secondaryText};
-    }
-
-    @media (max-width: 1024px) {
-        img {
-            width: 2rem;
-            height: 2rem;
-        }
-    }
-`;
-
-const HeartIcon = styled(IoIosHeartEmpty)`
-    color: ${colors.secondaryText};
-    font-size: 2rem;
-
-    @media (max-width: 1024px) {
-        & {
-            font-size: .9rem;
-        }
-    }
-`;
-
-const HeartIconFull = styled(IoIosHeart)`
-  color: red;
-  font-size: 2rem;
-`;
 
 const TextContainer = styled.div`
   width: 100%;
-`;
-
-const InfoContainer = styled.div`
-  width: 100%;
-  margin-bottom: 1rem;
-
-  & > h2 {
-    margin: 1rem 0;
-    font-family: "Lato", sans-serif;
-    color: ${colors.secondaryText};
-    font-size: 1.2rem;
-  }
-
-    & > h3 {
-        font-size: 1rem;
-        color: ${colors.mainText};
-    }
-
-    @media (max-width: 1024px) {
-        & > h2 {
-            margin: .5rem 0;
-            font-size: 1rem;
-        }
-        & > h3 {
-            font-size: 1rem;
-        }
-    }
 `;
 
 const PreviewContainer = styled.a`
@@ -310,8 +225,3 @@ const PreviewContainer = styled.a`
     }
 `;
 
-const Hashtag = styled.span`
-  cursor: pointer;
-  color: ${colors.secondaryText};
-  font-weight: bold;
-`;
