@@ -47,6 +47,7 @@ const Header = () => {
 
   const myLikesHandler = () => {
     setClickedMyLikes(true);
+    //updatePostsList(config);
   };
 
   return (
