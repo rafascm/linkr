@@ -5,10 +5,14 @@ import ReactHashtag from "react-hashtag";
 import { FaTrash } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import Axios from 'axios';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const InfoContainer = ({ id, User, user, userClickedHandler, text, setClickedMyLikes, setClickedUser, setClickedHashtag, updatePostsList, config }) => {
     const [clickedEditBtn, setClickedEditBtn] = useState(false);
     const [newText, setNewText] = useState(text);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const hashtagClickedHandler = (tag) => {
         setClickedMyLikes(false);
@@ -17,7 +21,7 @@ const InfoContainer = ({ id, User, user, userClickedHandler, text, setClickedMyL
         setClickedHashtag(tag.substring(1));
         updatePostsList(config);
 
-        history.push(`/hashtag/${tag.substring(1)}`);
+        history.push(`/hashtag/${tag.substring(1)}`);w
     };
 
     const toggleClickEditBtn = () => setClickedEditBtn(!clickedEditBtn);
@@ -30,15 +34,29 @@ const InfoContainer = ({ id, User, user, userClickedHandler, text, setClickedMyL
     const handleKeyDown = event => event.key === "Escape" && toggleClickEditBtn();
 
     const submitClickHandler = (e) => {
+        let edit = true;
         e.preventDefault();
         toggleClickEditBtn();
         Axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${id}`, { text: newText }, config)
-        .catch(errorHandler)
+        .catch(() => errorHandler(edit))
     }
-    const errorHandler = () => {
-        alert("Não foi possível salvar as alterações");
+    const errorHandler = (edit = undefined) => {
+        edit ? alert("Não foi possível salvar as alterações") :
+        alert('Não foi possível excluir o post');
         toggleClickEditBtn();
     }
+
+    const submitPostDelete = () => {
+        Axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/posts/${id}`, config)
+        .then(processDelete)
+        .catch(errorHandler)
+    }
+
+    const processDelete = () => {
+        updatePostsList(config);
+        setIsModalOpen(false);
+    }
+
     return (
         <Container>
             <div>
@@ -68,10 +86,21 @@ const InfoContainer = ({ id, User, user, userClickedHandler, text, setClickedMyL
             {
                 (User.user.id === user.id) &&
                 <div>
-                    <EditIcon onClick={toggleClickEditBtn} />
-                    <DeleteIcon />
+                    <EditIcon onClick={() => toggleClickEditBtn()} />
+                    <DeleteIcon onClick={() => setIsModalOpen(true)}/>
                 </div>
             }
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={()=> setIsModalOpen(false)}
+                style={modalCustomStyles}
+            >
+                <h2>Deseja excluir este post?</h2>
+                <ModalBtnContainer>
+                    <button onClick={() => submitPostDelete()}>Sim</button>
+                    <button onClick={()=> setIsModalOpen(false)}>Não</button>
+                </ModalBtnContainer>
+            </Modal>
         </Container>
     );
 }
@@ -117,3 +146,35 @@ const DeleteIcon = styled(FaTrash)`
   color: ${colors.secondaryText};
   font-size: .9rem;
 `;
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+
+    & > button {
+        margin: .5rem;
+        padding: .5rem 1rem;
+        background-color: ${colors.button};
+        color: ${colors.secondaryText};
+        font-weight: bold;
+        outline-style: none;
+        border: none;
+        border-radius: .5rem;
+    }
+`;
+
+
+const modalCustomStyles = {
+    content : {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      padding: '2rem',
+      borderRadius: '.5rem'
+    }
+  };
+
