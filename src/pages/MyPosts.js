@@ -14,7 +14,7 @@ const MyPosts = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-      >
+      >        
         <Trending />
         <Container>
           <h2>My Posts</h2>
