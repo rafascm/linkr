@@ -7,6 +7,8 @@ import PostsContext from "../contexts/PostsContext";
 import UserContext from "../contexts/UserContext";
 import ImageContainer from './ImageContainer';
 import InfoContainer from './InfoContainer';
+import YouTube from 'react-youtube';
+import getYoutubeID from 'get-youtube-id';
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -39,7 +41,7 @@ const Post = ({ post }) => {
   });
   const [isLiked, setIsLiked] = useState(initialState);
   const [likedArray, setLikedArray] = useState(likes);
-  
+
 
   const userClickedHandler = (user) => {
     setClickedMyLikes(false);
@@ -114,6 +116,9 @@ const Post = ({ post }) => {
     return newString;
   };
 
+
+  const onReady = event => event.target.pauseVideo();
+
   return (
     <Container>
       <ImageContainer
@@ -137,14 +142,18 @@ const Post = ({ post }) => {
           updatePostsList={updatePostsList}
           config={config}
         />
-        <PreviewContainer href={link} target="_blank">
-          <div>
-            <h1>{linkTitle}</h1>
-            <p>{linkDescription}</p>
-            <h6>{link}</h6>
-          </div>
-          <img src={linkImage} />
-        </PreviewContainer>
+        {
+          getYoutubeID(link) ?
+            <YouTube videoId={getYoutubeID(link)} opts={opts} onReady={e => onReady(e)}/> :
+            <PreviewContainer href={link} target="_blank">
+              <div>
+                <h1>{linkTitle} {getYoutubeID(link)}</h1>
+                <p>{linkDescription}</p>
+                <h6>{link}</h6>
+              </div>
+              <img src={linkImage} />
+            </PreviewContainer>
+        }
       </TextContainer>
     </Container>
   );
@@ -225,3 +234,10 @@ const PreviewContainer = styled.a`
     }
 `;
 
+const opts = {
+  height: 341,
+  width: 560,
+  playerVars: {
+    autoplay: 0
+  }
+}
