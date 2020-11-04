@@ -6,6 +6,7 @@ import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import PostsContext from "../contexts/PostsContext";
 import { motion } from "framer-motion";
+import ImageContainer from './ImageContainer';
 
 const Publish = () => {
   const { User } = useContext(UserContext);
