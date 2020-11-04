@@ -24,9 +24,9 @@ const Trending = () => {
     const hashtagHandler = (tag, e) => {
         e && e.preventDefault();
         if (tag.charAt(0) === "#") tag = tag.substring(1);
-        setClickedHashtag(tag);
-        updatePostsList(config);
+        setClickedHashtag(tag);        
         history.push(`/hashtag/${tag}`);
+        updatePostsList(config);
         setHashtagName("");
     };
 
@@ -72,7 +72,7 @@ export default Trending;
 
 const Container = styled.aside`
   position: fixed;
-  top: 11.5rem;
+  top: 13.5rem;
   left: calc(50vw + 15rem);
   display: flex;
   flex-direction: column;

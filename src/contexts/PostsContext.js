@@ -26,7 +26,7 @@ export const PostsProvider = (props) => {
       : userHasBeenClicked
       ? `${headURL}/users/${clickedUser.id}/${tailURL}`
       : clickedMyLikes
-      ? `${headURL}/${likedURL}?offset=0&limit=5`
+      ? `${headURL}/${likedURL}`
       : `${headURL}/${tailURL}`;
 
     Axios.get(url, config)

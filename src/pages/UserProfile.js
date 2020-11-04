@@ -6,6 +6,7 @@ import PostsContext from "../contexts/PostsContext";
 import { colors } from "../styles/styles";
 import PostsList from "../components/PostsList";
 import { motion } from "framer-motion";
+import FollowUnfollow from "../components/FollowUnfollow";
 
 const UserProfile = () => {
   const { clickedUser } = useContext(PostsContext);
@@ -20,6 +21,7 @@ const UserProfile = () => {
       >
         <Trending />
         <Container>
+          <FollowUnfollow/>
           <h2>{clickedUser.username}'s posts</h2>
           <Content>
             <PostsList />

@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
+import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { colors } from "../styles/styles";
 import UserContext from "../contexts/UserContext";
 import PostsContext from "../contexts/PostsContext";
+import { DebounceInput } from "react-debounce-input";
 
 const Header = () => {
   const { User } = useContext(UserContext);
@@ -40,18 +42,32 @@ const Header = () => {
     setClickedHashtag("");
     setClickedUser({});
     setClickedUser(user);
-    updatePostsList(config);
 
+    updatePostsList(config);
     history.push(`/user/${user.id}`);
   };
 
   const myLikesHandler = () => {
+    setClickedHashtag("");
+    setClickedUser({});
     setClickedMyLikes(true);
+  };
+
+  const getUsers = (searchName) => {
+    Axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${searchName}`, config)
+    .catch((err) => console.error(err))
+    .then(({data}) => console.log(data))
   };
 
   return (
     <HeaderContainer>
       <h1 onClick={() => logoClickHandler()}>linkr</h1>
+      <StyledDebounce
+        placeholder="Search for people and friends..."
+        minLength={3}
+        debounceTimeout={300}
+        onChange={(event) => getUsers(event.target.value)}
+      />
       <div>
         <span onClick={() => dropMenu()}>
           {hasClicked ? <UpIcon /> : <DropDownIcon />}
@@ -74,6 +90,15 @@ const Header = () => {
 };
 
 export default Header;
+
+const StyledDebounce = styled(DebounceInput)`
+  width: 30%;
+  height: 2rem;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  outline-style: none;
+  border: none;
+`;
 
 const HeaderContainer = styled.div`
   position: fixed;

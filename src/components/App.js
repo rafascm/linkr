@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyle from "../styles/styles";
 import { UserProvider } from "../contexts/UserContext";
 import { PostsProvider } from "../contexts/PostsContext";
+import { FollowProvider } from "../contexts/FollowContext";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import Timeline from "../pages/Timeline";
@@ -16,34 +17,36 @@ const App = () => {
   return (
     <UserProvider>
       <PostsProvider>
-        <GlobalStyle />
-        <Router basename="/linkr">
-          <AnimatePresence>
-            <Switch>
-              <Route path="/" exact>
-                <SignIn />
-              </Route>
-              <Route path="/sign-up">
-                <SignUp />
-              </Route>
-              <Route path="/timeline">
-                <Timeline />
-              </Route>
-              <Route path="/user">
-                <UserProfile />
-              </Route>
-              <Route path="/hashtag">
-                <HashtagPosts />
-              </Route>
-              <Route path="/my-likes">
-                <MyLikes />
-              </Route>
-              <Route path="/my-posts">
-                <MyPosts />
-              </Route>
-            </Switch>
-          </AnimatePresence>
-        </Router>
+        <FollowProvider>
+          <GlobalStyle />
+          <Router basename="/linkr">
+            <AnimatePresence>
+              <Switch>
+                <Route path="/" exact>
+                  <SignIn />
+                </Route>
+                <Route path="/sign-up">
+                  <SignUp />
+                </Route>
+                <Route path="/timeline">
+                  <Timeline />
+                </Route>
+                <Route path="/user">
+                  <UserProfile />
+                </Route>
+                <Route path="/hashtag">
+                  <HashtagPosts />
+                </Route>
+                <Route path="/my-likes">
+                  <MyLikes />
+                </Route>
+                <Route path="/my-posts">
+                  <MyPosts />
+                </Route>
+              </Switch>
+            </AnimatePresence>
+          </Router>
+        </FollowProvider>
       </PostsProvider>
     </UserProvider>
   );
