@@ -58,7 +58,7 @@ const Header = () => {
     setClickedHashtag("");
     setClickedUser({});
     setPostsList([]);
-    setClickedMyLikes(true);    
+    setClickedMyLikes(true);
     updatePostsList(config);
   };
 
@@ -68,15 +68,41 @@ const Header = () => {
       config
     )
       .catch((err) => console.error(err))
-      .then(({ data }) => setUsersFound(data));
+      .then(({ data }) => realignFollowingFirst(data));
 
     realignInputResults();
   };
 
-  const alignFollowingFirst = (user) => {
+  const realignFollowingFirst = (data) => {
+    let following = [""];
+    let notFollowing = [""];
+    let concatArr = [""];
+
+    following = data.users.filter((user) => {
+      return followingArray.some((follow) => follow.id === user.id);
+    });
+
+    notFollowing = data.users.filter((user) => {
+      return !following.some((follow) => follow.id === user.id);
+    });
+
+    concatArr = [...following, ...notFollowing];
+
+    setUsersFound(concatArr);
+  };
+
+  const checkFollowing = (user) => {
     return (
       followingArray && followingArray.some((follow) => follow.id === user.id)
     );
+  };
+
+  const logoutFunc = () => {
+    setClickedMyLikes(false);
+    setClickedHashtag("");
+    setClickedUser({});
+    setClickedUser("");
+    setPostsList([]);
   };
 
   return (
@@ -91,11 +117,11 @@ const Header = () => {
         />
         <SearchDropdown>
           {usersFound &&
-            usersFound.users.map((user) => (
+            usersFound.map((user) => (
               <li onClick={() => userClickedHandler(user)} key={user.id}>
                 <img src={user.avatar} />
                 {user.username}
-                <p>{alignFollowingFirst(user) ? "-Following-" : ""}</p>
+                <p>{checkFollowing(user) ? "-Following-" : ""}</p>
               </li>
             ))}
         </SearchDropdown>
@@ -112,7 +138,7 @@ const Header = () => {
           <Link onClick={() => myLikesHandler()} to="/my-likes">
             <p>My likes</p>
           </Link>
-          <Link to="/">
+          <Link onClick={() => logoutFunc()} to="/">
             <p>Logout</p>
           </Link>
         </DropDownMenu>
