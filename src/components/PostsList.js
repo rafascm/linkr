@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import PostsContext from "../contexts/PostsContext";
+import FollowContext from "../contexts/FollowContext";
 import Post from "./Post.js";
 
 const PostsList = () => {
@@ -17,17 +18,23 @@ const PostsList = () => {
     clickedHashTag,
     clickedMyLikes,
   } = useContext(PostsContext);
-
+  const { followingArray } = useContext(FollowContext);
   const { User } = useContext(UserContext);
   const { token } = User;
   const [config] = useState({ headers: { "user-token": token } });
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => updatePostsList(config), [clickedUser, clickedHashTag]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updatePostsList(config);
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [clickedUser, clickedHashTag]);
 
   const loadFunc = () => {
     const tailURL = `posts?offset=${increaseOffset}&limit=5`;
     const headURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr";
+    const FollowingURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following";
     const likedURL = "posts/liked";
 
     const userHasBeenClicked = Object.keys(clickedUser).length;
@@ -38,7 +45,7 @@ const PostsList = () => {
       ? `${headURL}/users/${clickedUser.id}/${tailURL}`
       : clickedMyLikes
       ? `${headURL}/${likedURL}?offset=${increaseOffset}&limit=5`
-      : `${headURL}/${tailURL}`;
+      : `${FollowingURL}/${tailURL}`;
 
     Axios.get(url, config).then(({ data }) => {
       setIncreaseOffset(increaseOffset + 5);
@@ -58,9 +65,17 @@ const PostsList = () => {
           </LoadingContainer>
         }
       >
-        {postsList.map((post) => (
-          <Post post={post} key={Math.floor(Math.random() * 1000000)} />
-        ))}
+        {followingArray.length > 0 ? (
+          postsList.length > 0 ? (
+            postsList.map((post) => (
+              <Post post={post} key={Math.floor(Math.random() * 1000000)} />
+            ))
+          ) : (
+            <h1>Nenhuma publicação encontrada!</h1>
+          )
+        ) : (
+          <h1>Você ainda não segue ningúem!</h1>
+        )}
       </StyledInfiniteScroll>
     </>
   );

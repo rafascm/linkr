@@ -30,33 +30,33 @@ const TitleContainer = styled.div`
     width: 60%;
   }
 
-    h1 {
-        font-size: 8rem;
-        color: ${colors.secondaryText};
+  h1 {
+    font-size: 8rem;
+    color: ${colors.secondaryText};
+  }
+  h2 {
+    font-size: 3rem;
+    color: ${colors.secondaryText};
+  }
+
+  @media (max-width: 1024px) {
+    & {
+      width: 100%;
+      padding: 1rem 0;
+      height: initial;
+
+      & > div {
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 4rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
     }
-    h2 {
-        font-size: 3rem;
-        color: ${colors.secondaryText};
-    }
-
-    @media (max-width: 1024px) {
-        & {
-            width: 100%;
-            padding: 1rem 0;
-            height: initial;
-
-            & > div {
-                width: 100%;
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 4rem;
-            }
-
-            h2 {
-                font-size: 1.2rem;
-            }
-        }
-    }
+  }
 `;
