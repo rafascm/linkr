@@ -10,10 +10,10 @@ export default FollowContext;
 export const FollowProvider = (props) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [followingArray, setFollowingArray] = useState("");
-  const { clickedUser } = useContext(PostsContext);
+  const { clickedUser, updatePostsList } = useContext(PostsContext);
   const { User } = useContext(UserContext);
   const { token } = User;
-  //const [config] = useState({ headers: { "user-token": token } });
+  const [conf] = useState({ headers: { "user-token": token } });
 
   const requestFollowers = () => {
     const url =
@@ -27,7 +27,6 @@ export const FollowProvider = (props) => {
     setFollowingArray(data.users);
     let follow = data.users.some((user) => user.id === clickedUser.id);
     setIsFollowing(follow);
-    console.log(data);
   };
 
   const followUser = () => {
@@ -37,6 +36,7 @@ export const FollowProvider = (props) => {
       .then(() => {
         setIsFollowing(true);
         requestFollowers();
+        //updatePostsList(conf);
       });
   };
 
@@ -47,6 +47,7 @@ export const FollowProvider = (props) => {
       .then(() => {
         setIsFollowing(false);
         requestFollowers();
+        //updatePostsList(conf);
       });
   };
 

@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { colors } from "../styles/styles";
 import PostsContext from "../contexts/PostsContext";
 import UserContext from "../contexts/UserContext";
-import ImageContainer from './ImageContainer';
-import InfoContainer from './InfoContainer';
-import YouTube from 'react-youtube';
-import getYoutubeID from 'get-youtube-id';
+import ImageContainer from "./ImageContainer";
+import InfoContainer from "./InfoContainer";
+import YouTube from "react-youtube";
+import getYoutubeID from "get-youtube-id";
 
 const Post = ({ post }) => {
   const history = useHistory();
@@ -41,7 +41,6 @@ const Post = ({ post }) => {
   });
   const [isLiked, setIsLiked] = useState(initialState);
   const [likedArray, setLikedArray] = useState(likes);
-
 
   const userClickedHandler = (user) => {
     setClickedMyLikes(false);
@@ -103,21 +102,22 @@ const Post = ({ post }) => {
 
       if (aux.length === 2) return `Voce e ${likeNames[0]} curtiram isso`;
 
-      newString = `Voce, ${likeNames[0]} e outra(s) ${likeNames.length - 1
-        } pessoa(s) curtiram isso`;
+      newString = `Voce, ${likeNames[0]} e outra(s) ${
+        likeNames.length - 1
+      } pessoa(s) curtiram isso`;
     } else {
       if (likeNames.length === 1) return `${likeNames[0]} curtiu isso`;
       if (likeNames.length === 2)
         return `${likeNames[0]} e ${likeNames[1]} curtiram isso`;
 
-      newString = `${likeNames[0]}, ${likeNames[1]} e outra(s) ${likeNames.length - 2
-        } pessoa(s) curtiram isso`;
+      newString = `${likeNames[0]}, ${likeNames[1]} e outra(s) ${
+        likeNames.length - 2
+      } pessoa(s) curtiram isso`;
     }
     return newString;
   };
 
-
-  const onReady = event => event.target.pauseVideo();
+  const onReady = (event) => event.target.pauseVideo();
 
   return (
     <Container>
@@ -142,18 +142,24 @@ const Post = ({ post }) => {
           updatePostsList={updatePostsList}
           config={config}
         />
-        {
-          getYoutubeID(link) ?
-            <YouTube videoId={getYoutubeID(link)} opts={opts} onReady={e => onReady(e)}/> :
-            <PreviewContainer href={link} target="_blank">
-              <div>
-                <h1>{linkTitle} {getYoutubeID(link)}</h1>
-                <p>{linkDescription}</p>
-                <h6>{link}</h6>
-              </div>
-              <img src={linkImage} />
-            </PreviewContainer>
-        }
+        {getYoutubeID(link) ? (
+          <YouTube
+            videoId={getYoutubeID(link)}
+            opts={opts}
+            onReady={(e) => onReady(e)}
+          />
+        ) : (
+          <PreviewContainer href={link} target="_blank">
+            <div>
+              <h1>
+                {linkTitle} {getYoutubeID(link)}
+              </h1>
+              <p>{linkDescription}</p>
+              <h6>{link}</h6>
+            </div>
+            <img src={linkImage} />
+          </PreviewContainer>
+        )}
       </TextContainer>
     </Container>
   );
@@ -223,21 +229,21 @@ const PreviewContainer = styled.a`
     }
   }
   @media (max-width: 1024px) {
-        & > img {
-            display:none;
-        }
-        p {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-height: 2rem
-        }
+    & > img {
+      display: none;
     }
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 2rem;
+    }
+  }
 `;
 
 const opts = {
   height: 341,
   width: 560,
   playerVars: {
-    autoplay: 0
-  }
-}
+    autoplay: 0,
+  },
+};

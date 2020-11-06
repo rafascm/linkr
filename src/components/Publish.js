@@ -6,7 +6,7 @@ import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import PostsContext from "../contexts/PostsContext";
 import { motion } from "framer-motion";
-import ImageContainer from './ImageContainer';
+import ImageContainer from "./ImageContainer";
 
 const Publish = () => {
   const { User } = useContext(UserContext);
@@ -94,25 +94,25 @@ const AnimatedContainer = styled(motion.div)`
 `;
 
 const Container = styled.div`
-    background-color: ${colors.secondaryText};
-    width: 100%;
-    padding: 1rem;
-    border-radius: 1rem;
-    display: flex;
-    justify-content: space-between;
+  background-color: ${colors.secondaryText};
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
 
-    img {
-        border-radius: 50%;
-        width: 4rem;
-        height: 4rem;
-        margin-right: 1rem;
-    }
+  img {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+  }
 
-    @media (max-width: 1024px) {
-        & > img {
-            display: none;
-        }
+  @media (max-width: 1024px) {
+    & > img {
+      display: none;
     }
+  }
 `;
 
 const InputContainer = styled.form`

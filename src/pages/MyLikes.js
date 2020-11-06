@@ -42,12 +42,12 @@ const Container = styled.div`
     margin-bottom: 3rem;
   }
   @media (max-width: 1024px) {
-        & > h2 {
-            width: initial;
-            margin-left: 1rem;
-            margin-bottom: 1.5rem;
-        }
+    & > h2 {
+      width: initial;
+      margin-left: 1rem;
+      margin-bottom: 1.5rem;
     }
+  }
 `;
 
 const Content = styled.div`
@@ -60,7 +60,7 @@ const Content = styled.div`
 
   @media (max-width: 1024px) {
     & {
-        width: 100%;
+      width: 100%;
     }
   }
 `;

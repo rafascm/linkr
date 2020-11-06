@@ -17,6 +17,7 @@ export const PostsProvider = (props) => {
 
     const tailURL = `posts?offset=0&limit=5`;
     const headURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr";
+    const FollowingURL = "https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/following";
     const likedURL = "posts/liked?offset=0&limit=5";
 
     const userHasBeenClicked = Object.keys(clickedUser).length;
@@ -27,7 +28,7 @@ export const PostsProvider = (props) => {
       ? `${headURL}/users/${clickedUser.id}/${tailURL}`
       : clickedMyLikes
       ? `${headURL}/${likedURL}`
-      : `${headURL}/${tailURL}`;
+      : `${FollowingURL}/${tailURL}`;
 
     Axios.get(url, config)
       .catch(errorHandler)

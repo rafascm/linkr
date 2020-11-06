@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { colors } from "../styles/styles";
 import UserContext from "../contexts/UserContext";
 import PostsContext from "../contexts/PostsContext";
+import FollowContext from "../contexts/FollowContext";
 import { DebounceInput } from "react-debounce-input";
 
 const Header = () => {
@@ -13,7 +14,13 @@ const Header = () => {
   const { user, token } = User;
   const [config] = useState({ headers: { "user-token": token } });
 
+  const { followingArray, requestFollowers } = useContext(FollowContext);
+  const [usersFound, setUsersFound] = useState("");
+
+  useEffect(() => requestFollowers(), []);
+
   const {
+    setPostsList,
     updatePostsList,
     setClickedUser,
     setClickedHashtag,
@@ -32,7 +39,7 @@ const Header = () => {
     setClickedHashtag("");
     setClickedUser({});
     setClickedMyLikes(false);
-
+    setPostsList([]);
     updatePostsList(config);
     history.push("/timeline");
   };
@@ -42,7 +49,7 @@ const Header = () => {
     setClickedHashtag("");
     setClickedUser({});
     setClickedUser(user);
-
+    setPostsList([]);
     updatePostsList(config);
     history.push(`/user/${user.id}`);
   };
@@ -50,24 +57,76 @@ const Header = () => {
   const myLikesHandler = () => {
     setClickedHashtag("");
     setClickedUser({});
+    setPostsList([]);
     setClickedMyLikes(true);
+    updatePostsList(config);
   };
 
   const getUsers = (searchName) => {
-    Axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${searchName}`, config)
-    .catch((err) => console.error(err))
-    .then(({data}) => console.log(data))
+    Axios.get(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v1/linkr/users/search?username=${searchName}`,
+      config
+    )
+      .catch((err) => console.error(err))
+      .then(({ data }) => realignFollowingFirst(data));
+
+    realignInputResults();
+  };
+
+  const realignFollowingFirst = (data) => {
+    let following = [""];
+    let notFollowing = [""];
+    let concatArr = [""];
+
+    following = data.users.filter((user) => {
+      return followingArray.some((follow) => follow.id === user.id);
+    });
+
+    notFollowing = data.users.filter((user) => {
+      return !following.some((follow) => follow.id === user.id);
+    });
+
+    concatArr = [...following, ...notFollowing];
+
+    setUsersFound(concatArr);
+  };
+
+  const checkFollowing = (user) => {
+    return (
+      followingArray && followingArray.some((follow) => follow.id === user.id)
+    );
+  };
+
+  const logoutFunc = () => {
+    localStorage.removeItem("user");
+    setClickedMyLikes(false);
+    setClickedHashtag("");
+    setClickedUser({});
+    setClickedUser("");
+    setPostsList([]);
   };
 
   return (
     <HeaderContainer>
       <h1 onClick={() => logoClickHandler()}>linkr</h1>
-      <StyledDebounce
-        placeholder="Search for people and friends..."
-        minLength={3}
-        debounceTimeout={300}
-        onChange={(event) => getUsers(event.target.value)}
-      />
+      <SearchContainer>
+        <StyledDebounce
+          placeholder="Search for people and friends..."
+          minLength={3}
+          debounceTimeout={300}
+          onChange={(event) => getUsers(event.target.value)}
+        />
+        <SearchDropdown>
+          {usersFound &&
+            usersFound.map((user) => (
+              <li onClick={() => userClickedHandler(user)} key={user.id}>
+                <img src={user.avatar} />
+                {user.username}
+                <p>{checkFollowing(user) ? "-Following-" : ""}</p>
+              </li>
+            ))}
+        </SearchDropdown>
+      </SearchContainer>
       <div>
         <span onClick={() => dropMenu()}>
           {hasClicked ? <UpIcon /> : <DropDownIcon />}
@@ -80,7 +139,7 @@ const Header = () => {
           <Link onClick={() => myLikesHandler()} to="/my-likes">
             <p>My likes</p>
           </Link>
-          <Link to="/">
+          <Link onClick={() => logoutFunc()} to="/">
             <p>Logout</p>
           </Link>
         </DropDownMenu>
@@ -91,8 +150,54 @@ const Header = () => {
 
 export default Header;
 
-const StyledDebounce = styled(DebounceInput)`
+const SearchContainer = styled.div`
+  position: relative;
   width: 30%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const SearchDropdown = styled.div`
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  max-height: 7rem;
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.bgInput};
+  border-radius: 0.2rem;
+  overflow-y: scroll;
+
+  > li {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    font-size: 1rem;
+    color: black;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+  }
+
+  img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    margin: 0 1rem;
+  }
+
+  p {
+    font-size: 0.7rem;
+    color: slategray;
+    margin-left: 1rem;
+  }
+`;
+
+const StyledDebounce = styled(DebounceInput)`
+  z-index: 9999;
+  width: 100%;
   height: 2rem;
   padding: 0 1rem;
   border-radius: 0.5rem;
