@@ -98,6 +98,7 @@ const Header = () => {
   };
 
   const logoutFunc = () => {
+    localStorage.removeItem("user");
     setClickedMyLikes(false);
     setClickedHashtag("");
     setClickedUser({});

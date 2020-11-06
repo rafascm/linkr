@@ -19,6 +19,7 @@ export const UserProvider = (props) => {
   };
   const [isLogged, setIsLogged] = useState(false);
 
+  console.log(User)
   return (
     <UserContext.Provider
       value={{

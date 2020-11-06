@@ -6,14 +6,20 @@ import TitleComponent from "../components/Title";
 import Axios from "axios";
 import UserContext from "../contexts/UserContext";
 import { motion } from "framer-motion";
+
 const SignIn = () => {
   const history = useHistory();
 
-  const { User, setUser, isLogged, setIsLogged } = useContext(UserContext);
+  const { setUser, isLogged, setIsLogged } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
+
+  if (localStorage.getItem("user")) {
+    const storedInfo = localStorage.getItem("user");
+    setUser(JSON.parse(storedInfo));
+    history.push("/timeline");
+  }
 
   useEffect(() => {
     if (isLogged) {
@@ -47,6 +53,7 @@ const SignIn = () => {
           setPassword("");
           setIsLogged(true);
           setUser({ ...data });
+          localStorage.setItem("user", JSON.stringify({ ...data }));
           history.push("/timeline");
         })
         .catch(errorHandler);
